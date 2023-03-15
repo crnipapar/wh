@@ -9,13 +9,15 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+
+    <link rel="stylesheet" href="item.css" />
     <title>Warehouse</title>
   </head>
   <body>
     <div class="container-fluid">
-      <!-- Naslov -->
+      <!-- NASLOV -->
 
-      <div class="row" style="display: grid; grid-template-columns: 75% 25%">
+      <div class="row" style="display: grid; grid-template-columns: 65% 35%">
         <div
           class="col"
           style="
@@ -25,7 +27,16 @@
             justify-content: space-between;
           "
         >
-          <h2 id="heading"></h2>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h1 style="padding-left: 20px">Narudžbe</h1>
+            <h1 id="heading"><span></span></h1>
+          </div>
 
           <button
             type="button"
@@ -66,340 +77,158 @@
           </div>
         </div>
 
-        <!--  NOVA STAVKA button -->
+        <!--  OVO MORA BITI OVJDE -->
 
         <div class="col"></div>
       </div>
 
-      <!-- cijeli div-->
-      <div class="row" style="display: grid; grid-template-columns: 75% 25%">
-        <!-- KOLUMNE -->
-        <div class="col" style="">
-          <table class="table table-group-divider" style="font-size: 18px">
-            <thead class="table-light">
-              <tr>
-                <th scope="col"></th>
-                <th scope="col">#</th>
-                <th scope="col">Klijent</th>
-                <th scope="col">Info o klijentu</th>
-                <th scope="col">Datum</th>
-                <th scope="col">Vrsta aparata i model</th>
-                <th scope="col">Polog EUR</th>
-                <th scope="col">Ukupno EUR</th>
-                <th scope="col">Napomena</th>
-                <th scope="col">Klijent obaviješten dana</th>
-                <th scope="col">Narudžba gotova</th>
-              </tr>
-            </thead>
-
-            <!-- REDOVI  -->
-            <tbody class="table-striped table-group-divider" id="myTable">
-              <tr>
-                <th scope="row">
-                  <button
-                    id="editItemButton"
-                    style="padding: 15px"
-                    type="button"
-                    class="btn btn-outline-dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#edit"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-pen"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
-                      />
-                    </svg>
-                  </button>
-
-                  <button
-                    style="padding: 15px"
-                    type="button"
-                    class="btn btn-outline-dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      class="bi bi-printer-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"
-                      />
-                      <path
-                        d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
-                      />
-                    </svg>
-                  </button>
-
-                  <!-- EDIT  -->
-                  <div
-                    class="modal fade"
-                    id="edit"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                    tabindex="-1"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1
-                            class="modal-title fs-5 mx-auto"
-                            id="staticBackdropLabel"
-                          >
-                            Uredi stavku
-                          </h1>
-
-                          <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"
-                          ></button>
-                        </div>
-
-                        <div class="modal-body">
-                          <form id="editItemButton">
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Klijent</label
-                              >
-                              <input
-                                type="text"
-                                name="name"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Info o klijentu</label
-                              >
-                              <input
-                                type="text"
-                                name="customerInfo"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput2"
-                                class="form-label"
-                                >Datum</label
-                              >
-                              <input
-                                type="date"
-                                name="date"
-                                id=""
-                                value=""
-                                class="form-control"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Proizvođač</label
-                              >
-                              <input
-                                type="text"
-                                name="manufacturer"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Vrsta aparata i model</label
-                              >
-                              <input
-                                type="text"
-                                name="type"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Polog EUR</label
-                              >
-                              <input
-                                type="number"
-                                name="downpayment"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Ukupno EUR</label
-                              >
-                              <input
-                                type="number"
-                                name="totalAmount"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Vraćeno dana</label
-                              >
-                              <input
-                                type="date"
-                                name="returnedAt"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Napomena</label
-                              >
-                              <input
-                                type="text"
-                                name="note"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Klijent obaviješten dana</label
-                              >
-                              <input
-                                type="date"
-                                name="customerNotifiedAt"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                            <div class="mb-3">
-                              <label
-                                for="formGroupExampleInput"
-                                class="form-label"
-                                >Narudžba gotova</label
-                              >
-                              <input
-                                type="text"
-                                name="orderDoneAt"
-                                class="form-control"
-                                id="formGroupExampleInput"
-                                placeholder=""
-                              />
-                            </div>
-                          </form>
-                        </div>
-
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Zatvori
-                          </button>
-                          <button
-                            type="button"
-                            id="editItemButton"
-                            class="btn btn-primary"
-                          >
-                            Spremi
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </th>
-
-                <!-- REDOVI -->
-                <td id="orderNumber" style="font-weight: bold"></td>
-                <td name="name"></td>
-                <td name="customerInfo"></td>
-                <td name="date"></td>
-                <td name="manufacturer"></td>
-                <td name="downpayment"></td>
-                <td name="totalAmount"></td>
-                <td name="note"></td>
-                <td name="customerNotifiedAt"></td>
-                <td name="orderDoneAt"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!-- kraj liste -->
-
-        <!-- DIJELOVI ACCORDION-->
-        <div class="card">
-          <div class="card-header" style="font-weight: bold; font-size: 18px">
-            Dijelovi
-          </div>
-
-          <div class="accordion accordion-flush" id="accordionFlushExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="flush-headingOne">
-                <button
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapseOne"
-                  aria-expanded="false"
-                  aria-controls="flush-collapseOne"
-                >
-                  Mateo
-                </button>
-              </h2>
-              <div
-                id="flush-collapseOne"
-                class="accordion-collapse collapse"
-                aria-labelledby="flush-headingOne"
+      <!-- DONJI DIO-->
+      <div style="display: grid; grid-template-columns: 65% 35%">
+        <!-- STAVKA -->
+        <div>
+          <div class="item-container">
+            <!-- BOTUNI -->
+            <div
+              class="buttons btn-group-vertical"
+              role="group"
+              aria-label="Vertical button group"
+            >
+              <!-- button uredi stavka -->
+              <button
+                style="padding: 10px"
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-toggle="modal"
+                data-bs-target="#edit"
               >
-                <div class="accordion-body"></div>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">opis</li>
-                  <li class="list-group-item">datum 1</li>
-                  <li class="list-group-item">datum 2</li>
-                </ul>
+                Uredi
+                <!-- <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-pen"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
+                    />
+                  </svg> -->
+              </button>
+
+              <!-- button delete stavka -->
+
+              <button
+                style="padding: 10px"
+                type="button"
+                class="btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#delete"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-trash"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                  />
+                </svg>
+              </button>
+
+              <!-- button print -->
+
+              <button
+                style="padding: 10px"
+                type="button"
+                class="btn btn-outline-warning"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-printer-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"
+                  />
+                  <path
+                    d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <!-- BROJ DATUM-->
+            <div class="id">
+              <h1 class="id">1</h1>
+              <h2 class="id">Datum:</h2>
+              <h2>1. 2. 1234.</h2>
+            </div>
+
+            <!--  STAVKA BASIC INFO-->
+            <div class="basic-info">
+              <h2>Klijent: <strong>Mateo d.o.o.</strong></h2>
+              <h2>Proizvođač: <strong>Hyundai</strong></h2>
+              <h2>Aparat: <strong>Frižider</strong></h2>
+              <h2>Model: <strong>Frižider</strong></h2>
+            </div>
+
+            <!-- STAVKA DATUMI-->
+
+            <div class="order-info">
+              <h2>Ukupno: <strong>500 €</strong></h2>
+              <h2>Polog: <strong>350 €</strong></h2>
+              <h2>Obaviješten: <strong>1. 2. 1234.</strong></h2>
+              <h2>Gotovo: <strong>1. 2. 1234.</strong></h2>
+            </div>
+
+            <!-- STAVKA NAPOMENA-->
+            <div class="note">
+              <h2>Napomena</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
+                hic maiores consequatur neque assumenda. Rem eius distinctio
+                soluta, ipsa illum magnam tempora sit voluptatem! Deleniti
+                consequuntur corporis aperiam? Reprehenderit, dicta.
+              </p>
+            </div>
+
+            <div class="buttons"></div>
+
+            <!-- BOTUNI ZA DIJELOVE-->
+          </div>
+        </div>
+        <!-- kraj stavki -->
+
+        <!-- DIJELOVI-->
+
+        <div class="card item-container2">
+          <div class="card-header">Dijelovi</div>
+
+          <div class="item-container3">
+            <div class="parts-info">
+              <h2>Opis <strong>1 </strong></h2>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+              natus corrupti necessitatibus inventore sapiente, error similique,
+              facilis magnam officiis ut odio enim. Odio vero quia facilis illo
+              deleniti quod? Temporibus?
+            </div>
+            <div class="parts-date">
+              <div>
+                <h2>Došao: <strong>22.3.2023.</strong></h2>
+              </div>
+              <div>
+                <h2>Isporučen: <strong>20.12.2023.</strong></h2>
               </div>
             </div>
           </div>
@@ -407,8 +236,9 @@
       </div>
     </div>
 
-    <!--  NOVA STAVKA button -->
+    <!--   MODALI -->
 
+    <!--   MODAL NOVA STAVKA -->
     <div
       class="modal fade"
       id="modalunesi"
@@ -442,7 +272,6 @@
                   name="name"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
 
@@ -455,7 +284,6 @@
                   name="customerInfo"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
               <div class="mb-3">
@@ -468,7 +296,6 @@
                   class="form-control"
                   id="currentDate"
                   value=""
-                  placeholder=""
                 />
               </div>
               <div class="mb-3">
@@ -480,7 +307,6 @@
                   name="manufacturer"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
               <div class="mb-3">
@@ -492,7 +318,6 @@
                   name="type"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
 
@@ -505,7 +330,6 @@
                   name="downpayment"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
               <div class="mb-3">
@@ -517,57 +341,20 @@
                   name="totalAmount"
                   class="form-control"
                   id="formGroupExampleInput"
-                  placeholder=""
                 />
               </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label"
-                  >Vraćeno dana</label
-                >
-                <input
-                  type="date"
-                  name="returnedAt"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                  placeholder=""
-                />
-              </div>
+
               <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label"
                   >Napomena</label
                 >
-                <input
-                  type="text"
+                <textarea
                   name="note"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                  placeholder=""
-                />
+                  class="form-control2"
+                  style="height: 200px"
+                ></textarea>
               </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label"
-                  >Klijent obaviješten dana</label
-                >
-                <input
-                  type="date"
-                  name="customerNotifiedAt"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                  placeholder=""
-                />
-              </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label"
-                  >Narudžba gotova</label
-                >
-                <input
-                  type="date"
-                  name="orderDoneAt"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                  placeholder=""
-                />
-              </div>
+
               <div class="modal-footer">
                 <button
                   type="button"
@@ -591,9 +378,157 @@
       </div>
     </div>
 
+    <!--   MODAL EDIT STAVKA -->
+    <div
+      class="modal fade"
+      id="edit"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
+              Uredi stavku
+            </h1>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <form id="editItemButton">
+              <div style="display: grid; grid-template-columns: 50% 50%">
+                <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Polog EUR</label
+                  >
+                  <input
+                    type="number"
+                    name="downpayment"
+                    class="form-control"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Ukupno EUR</label
+                  >
+                  <input
+                    type="number"
+                    name="totalAmount"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+              <div
+                class="container d-flex"
+                style="display: grid; grid-template-columns: 33% 33% 33%"
+              >
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Vraćeno dana</label
+                  >
+                  <input type="date" name="returnedAt" class="form-control" />
+                </div>
+
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Klijent obaviješten dana</label
+                  >
+                  <input
+                    type="date"
+                    name="customerNotifiedAt"
+                    class="form-control"
+                  />
+                </div>
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Narudžba gotova</label
+                  >
+                  <input type="date" name="orderDoneAt" class="form-control" />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label"
+                  >Napomena</label
+                >
+                <textarea
+                  name="note"
+                  class="form-control2"
+                  style="height: 200px"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Zatvori
+            </button>
+            <button type="button" id="editItemButton" class="btn btn-primary">
+              Spremi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--   MODAL BRIŠI STAVKU-->
+
+    <div class="modal" tabindex="-1" id="delete">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Jeste li sigurni da želite obrisati stavku?
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <div style="display: flex; justify-content: space-between">
+              <button
+                type="button"
+                class="btn btn-outline-dark btn-lg"
+                data-bs-dismiss="modal"
+              >
+                Ne, ne želim
+              </button>
+              <button
+                type="button"
+                class="btn btn-warning btn-lg"
+                data-bs-dismiss="modal"
+                id="deleteOrder"
+              >
+                Potvrdi
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <p id="statusMsg"></p>
 
-    <!-- SKRIPTA JAVASCRIPT-->
+    <!--  JAVASCRIPT-->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
@@ -605,7 +540,7 @@
       let currentDate = (document.getElementById("currentDate").valueAsDate =
         new Date());
 
-      // FUNKCIJA ZA BUTTONE NOVA STAVKA I EDIT
+      // FUNKCIJA ZA BUTTONE
       const editItemForm = document.getElementById("editItemForm");
       const editItemButton = document.getElementById("editItemButton");
       const addNewItemForm = document.getElementById("addNewItemForm");
@@ -614,9 +549,15 @@
       const orderHistory = document.getElementById("orderHistory");
       const activeOrders = document.getElementById("activeOrders");
       const allOrders = document.getElementById("allOrders");
+      const dynamicHeadingSpan = document.querySelector("#heading span");
+      const deleteOrder = document.getElementById("deleteOrder");
 
       const displayStatusMsg = async (message) => {
-        statusMsg.innerHTML = message;
+        statusMsg.innerHTML = `
+    <div class="alert alert-success" role="alert" style='display: inline-block;'>
+      ${message}
+    </div>
+  `;
         await new Promise((r) => setTimeout(r, 3000));
         statusMsg.innerHTML = "";
       };
@@ -641,21 +582,9 @@
       };
 
       // nova funkcija za GET metodu i stvarati redove(upiše se url za GET ALL ITEMS ili GET ITEM)
-      async function getData(url) {
+      async function getData(url, headingText) {
         const data = await sendRequest(url, "GET", null);
         items = await data;
-        // Find the table element
-        const table = document.getElementById("myTable");
-        var tableHTML = "";
-        items.forEach((item) => {
-          tableHTML += "<tr>";
-          Object.values(item).forEach((element) => {
-            tableHTML += "<td>" + element + "</td>";
-          });
-          tableHTML += "</tr>";
-        });
-
-        table.innerHTML = tableHTML;
       }
 
       // FUNKCIJA KOJA PRATI KOJI BUTTON JE KLIKNUT I EXECUTEA SENDREQUEST PO URLU I MIJENJA TEKST
@@ -666,34 +595,24 @@
 
           if (button === addNewItemButton) {
             const payload = new FormData(button);
-            sendRequest(
-              "http://192.168.86.127:3000/items/add/",
-              "POST",
-              payload
-            );
+            sendRequest("http://192.168.1.4:3000/items/add/", "POST", payload);
           } else if (button === editItemButton) {
             const payload = new FormData(button);
-            sendRequest(
-              "http://192.168.86.127:3000/items/edit/",
-              "POST",
-              payload
-            );
+            sendRequest("http://192.168.1.4:3000/items/edit/", "POST", payload);
           } else if (button === allOrders) {
             // svi itemi
-            var heading = "Narudžbe: sve";
-            var div = document.getElementById("heading");
-            div.textContent = heading;
-            getData("http://192.168.86.127:3000/items/");
+            dynamicHeadingSpan.textContent = ": sve";
+
+            getData("http://192.168.1.4:3000/items/");
           } else if (button === orderHistory) {
-            var heading = "Narudžbe: riješene";
-            var div = document.getElementById("heading");
-            div.textContent = heading;
-            getData("http://192.168.86.127:3000/items/"); //urediti url za neaktivne predmete
+            dynamicHeadingSpan.textContent = ": riješene";
+
+            getData("http://192.168.1.4:3000/items/"); //urediti url za neaktivne predmete
           } else if (button === activeOrders) {
-            var heading = "Narudžbe: aktivne";
-            var div = document.getElementById("heading");
-            div.textContent = heading;
-            getData("http://192.168.86.127:3000/items/"); //urediti url za aktivne predmete
+            dynamicHeadingSpan.textContent = ": aktivne";
+            getData("http://192.168.1.4:3000/items/"); //urediti url za aktivne predmete
+          } else if (button === deleteOrder) {
+            //urediti funkciju  za delete pojedine stavke
           }
         });
       }
@@ -704,6 +623,7 @@
       handleButtonClick(editItemButton);
       handleButtonClick(activeOrders);
       handleButtonClick(orderHistory);
+      handleButtonClick(deleteOrder);
 
       //FUNKCIJA ZA INSERT h1
     </script>
