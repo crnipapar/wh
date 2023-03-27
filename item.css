@@ -1,10 +1,15 @@
 .item-container {
   width: 100%;
-  background-color: #fbe8b1;
+
+  border: 2px solid black;
   display: flex;
   flex: row;
   border-radius: 20px;
   margin: 10px;
+}
+
+.item-container > div {
+  padding: 18px;
 }
 
 .id {
@@ -12,26 +17,35 @@
   flex-direction: column;
   align-items: center;
   flex-basis: 15%;
+  padding: 10px;
+  margin-left: -35px;
 }
 
 .basic-info {
   flex-basis: 20%;
+  margin-left: -20px;
 }
 
 .order-info {
   flex-basis: 20%;
+  margin-left: -20px;
 }
 
 .note {
-  flex-basis: 45%;
+  flex-basis: 35%;
+  margin-left: -20px;
+}
+
+.buttons {
+  flex-basis: 2%;
 }
 
 .note > p {
   text-align: justify;
 }
 
-.item-container > div {
-  padding: 20px;
+h1 {
+  font-size: 24px;
 }
 
 h2 {
@@ -46,4 +60,95 @@ h2.id {
 h1.id {
   margin: 5px;
   padding: 5px;
+}
+
+.form-control2 {
+  display: block;
+  width: 100%;
+  height: 200px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.box {
+  flex: 1;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.card-header {
+  font-weight: bold;
+  font-size: 18px;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid black;
+}
+
+.item-container2 {
+  width: auto;
+  padding: 0;
+  border: 2px solid black;
+  border-radius: 20px;
+  margin: 10px 10px 10px 30px;
+}
+
+.item-container3 {
+  width: 100%;
+  display: flex;
+  flex: row;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.parts-info {
+  flex-basis: 65%;
+  border-right: 2px black;
+  padding: 10px;
+}
+
+.parts-date {
+  flex-basis: 35%;
+  font-weight: bold;
+}
+
+.btn-outline-danger {
+  color: #000000;
+  border-color: #000000;
+}
+
+.btn-outline-danger:hover {
+  color: #000000;
+  font-weight: bold;
+  background-color: rgb(241, 135, 48);
+  border-color: #000000;
+}
+
+.btn-outline-danger:disabled {
+  color: #000000;
+  background-color: transparent;
+}
+
+.btn-outline-warning {
+  color: #000000;
+  border-color: #000000;
+}
+
+.btn-outline-warning:hover {
+  color: #212529;
+  background-color: #ffc107;
+  border-color: #000000;
+}
+
+.btn-outline-warning:disabled {
+  color: #ffc107;
+  background-color: transparent;
 }

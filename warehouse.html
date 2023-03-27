@@ -149,6 +149,7 @@
                 style="padding: 10px"
                 type="button"
                 class="btn btn-outline-warning"
+                onclick="printContent()"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -197,13 +198,21 @@
               <h2>Napomena</h2>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                hic maiores consequatur neque assumenda. Rem eius distinctio
-                soluta, ipsa illum magnam tempora sit voluptatem! Deleniti
-                consequuntur corporis aperiam? Reprehenderit, dicta.
+                hic maio
               </p>
             </div>
 
-            <div class="buttons"></div>
+            <div class="buttons">
+              <!-- button uredi stavka -->
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-toggle="modal"
+                data-bs-target="#addPart"
+              >
+                Dodaj dio
+              </button>
+            </div>
 
             <!-- BOTUNI ZA DIJELOVE-->
           </div>
@@ -223,14 +232,42 @@
               facilis magnam officiis ut odio enim. Odio vero quia facilis illo
               deleniti quod? Temporibus?
             </div>
-            <div class="parts-date">
+            <div class="parts-date col">
+
+            <div>
               <div>
                 <h2>Došao: <strong>22.3.2023.</strong></h2>
               </div>
               <div>
                 <h2>Isporučen: <strong>20.12.2023.</strong></h2>
               </div>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-toggle="modal"
+                data-bs-target="#addPart"
+              >
+                Uredi dio
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-toggle="modal"
+                data-bs-target="#deletePart"
+              >
+                Obriši dio
+              </button>
+
             </div>
+
+
+
+
+            </div>
+
+
+
+
           </div>
         </div>
       </div>
@@ -247,8 +284,10 @@
       tabindex="-1"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
+      
     >
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg"
+      >
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
@@ -263,6 +302,9 @@
           </div>
           <div class="modal-body">
             <form id="addNewItemForm">
+              
+              <div style="display: grid; grid-template-columns: 35% 65%">
+
               <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label"
                   >Klijent</label
@@ -286,18 +328,12 @@
                   id="formGroupExampleInput"
                 />
               </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput2" class="form-label"
-                  >Datum</label
-                >
-                <input
-                  type="date"
-                  name="date"
-                  class="form-control"
-                  id="currentDate"
-                  value=""
-                />
-              </div>
+            </div>
+
+        
+
+              <div style="display: grid; grid-template-columns: 35% 65%">
+
               <div class="mb-3">
                 <label for="formGroupExampleInput2" class="form-label"
                   >Proizvođač</label
@@ -320,30 +356,72 @@
                   id="formGroupExampleInput"
                 />
               </div>
-
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label">
-                  Polog EUR</label
-                >
-                <input
-                  type="number"
-                  name="downpayment"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                />
-              </div>
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label"
-                  >Ukupno EUR</label
-                >
-                <input
-                  type="number"
-                  name="totalAmount"
-                  class="form-control"
-                  id="formGroupExampleInput"
-                />
               </div>
 
+            
+            <div style="display: grid; grid-template-columns: 40% 40% 20%">
+                <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Polog EUR</label
+                  >
+                  <input
+                    type="number"
+                    name="downpayment"
+                    class="form-control"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Ukupno EUR</label
+                  >
+                  <input
+                    type="number"
+                    name="totalAmount"
+                    class="form-control"
+                  />
+                </div>
+
+                <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label"
+                  >Datum</label
+                >
+                <input
+                  type="date"
+                  name="date"
+                  class="form-control"
+                  id="currentDate"
+                  value=""
+                />
+              </div>
+              </div>
+
+              <div
+                style="display: grid; grid-template-columns: 33% 33% 33%"
+              >
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Vraćeno dana</label
+                  >
+                  <input type="date" name="returnedAt" class="form-control" />
+                </div>
+
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Klijent obaviješten dana</label
+                  >
+                  <input
+                    type="date"
+                    name="customerNotifiedAt"
+                    class="form-control"
+                  />
+                </div>
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Narudžba gotova</label
+                  >
+                  <input type="date" name="orderDoneAt" class="form-control" />
+                </div>
+              </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label"
                   >Napomena</label
@@ -404,7 +482,7 @@
           </div>
 
           <div class="modal-body">
-            <form id="editItemButton">
+            <form id="editItemForm">
               <div style="display: grid; grid-template-columns: 50% 50%">
                 <div class="mb-3">
                   <label for="formGroupExampleInput" class="form-label"
@@ -478,7 +556,7 @@
             >
               Zatvori
             </button>
-            <button type="button" id="editItemButton" class="btn btn-primary">
+            <button type="button" id="editItemButton" class="btn btn-primary" data-bs-dismiss="modal">
               Spremi
             </button>
           </div>
@@ -526,7 +604,165 @@
       </div>
     </div>
 
+    <!--   MODAL dodaj dio-->
+
+    <div
+      class="modal fade"
+      id="addPart"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
+              Dodaj dio
+            </h1>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="mb-3" style="margin: 20px">
+            <label for="formGroupExampleInput" class="form-label"
+              >Opis dijela</label
+            >
+            <textarea
+              name="note"
+              class="form-control2"
+              style="height: 200px"
+            ></textarea>
+          </div>
+          <div class="modal-body">
+            <form id="addPartForm">
+              <div style="display: grid; grid-template-columns: 50% 50%">
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Došao dana </label
+                  >
+                  <input type="date" name="" class="form-control" />
+                </div>
+
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Isporučen dana</label
+                  >
+                  <input
+                    type="date"
+                    name=""
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Zatvori
+            </button>
+            <button type="button" id="addPartButton" class="btn btn-primary"
+                              data-bs-dismiss="modal"
+>
+              Spremi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--   MODAL uredi dio-->
+
+   <div
+      class="modal fade"
+      id="addPart"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
+              Dodaj dio
+            </h1>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="mb-3" style="margin: 20px">
+            <label for="formGroupExampleInput" class="form-label"
+              >Opis dijela</label
+            >
+            <textarea
+              name="note"
+              class="form-control2"
+              style="height: 200px"
+            ></textarea>
+          </div>
+          <div class="modal-body">
+            <form id="addPartButton">
+              <div style="display: grid; grid-template-columns: 50% 50%">
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Došao dana </label
+                  >
+                  <input type="date" name="" class="form-control" />
+                </div>
+
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Isporučen dana</label
+                  >
+                  <input
+                    type="date"
+                    name=""
+                    class="form-control"
+                  />
+                </div>
+
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Zatvori
+            </button>
+            <button type="button" id="addPartButton" class="btn btn-primary">
+              Spremi
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <p id="statusMsg"></p>
+
+
+
+
 
     <!--  JAVASCRIPT-->
     <script
@@ -551,6 +787,8 @@
       const allOrders = document.getElementById("allOrders");
       const dynamicHeadingSpan = document.querySelector("#heading span");
       const deleteOrder = document.getElementById("deleteOrder");
+      const addPartButton = document.getElementById("addPartButton");
+      const addPartForm = document.getElementById("addPartForm")
 
       const displayStatusMsg = async (message) => {
         statusMsg.innerHTML = `
@@ -613,6 +851,8 @@
             getData("http://192.168.1.4:3000/items/"); //urediti url za aktivne predmete
           } else if (button === deleteOrder) {
             //urediti funkciju  za delete pojedine stavke
+          } else if (button === addPartButton) {
+            //urediti funkciju  za dodati dio 
           }
         });
       }
@@ -624,8 +864,35 @@
       handleButtonClick(activeOrders);
       handleButtonClick(orderHistory);
       handleButtonClick(deleteOrder);
+      handleButtonClick(addPartButton);
 
       //FUNKCIJA ZA INSERT h1
+
+
+
+
+
+      //FUNKCIJA ZA PRINT
+
+      function printContent() {
+        var iframe = document.createElement("iframe");
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(this.responseText);
+            iframe.contentWindow.document.close();
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+            document.body.removeChild(iframe);
+          }
+        };
+        xhttp.open("GET", "print.html", true);
+        xhttp.send();
+      }
     </script>
   </body>
 </html>
