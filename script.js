@@ -104,8 +104,163 @@ const deleteItem = async (id) => {
   sendRequest(ip + "items/delete/", "DELETE", payload);
 };
 
-const editItem = async (id) => {
-  const data = await sendRequest(ip + `items/${id}`);
+const saveItem = async (id) => {
+  let form = document.getElementById("ItemForm");
+  let payload = new FormData(form);
+  payload.append("id", id);
+  const response = await sendRequest(ip + "items/edit/", "PUT", payload);
+  console.log(response);
+};
+
+const editItem = async (id = "") => {
+  const response = await sendRequest(ip + `items/${id}`);
+  console.log(response.data.id);
+  let modal = document.createElement("div");
+  modal.className = "modal fade";
+  modal.id = "modalunesi";
+  modal.setAttribute("data-bs-backdrop", "static");
+  modal.setAttribute("data-bs-keyboard", "false");
+  modal.setAttribute("tabindex", "-1");
+  modal.setAttribute("aria-labelledby", "staticBackdropLabel");
+  modal.setAttribute("aria-hidden", "true");
+  modal.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Nova stavka
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form id="ItemForm">
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Klijent
+              </label>
+              <input
+                type="text"
+                name="name"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.name}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Info o klijentu
+              </label>
+              <input
+                type="text"
+                name="customerInfo"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.customerInfo}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="formGroupExampleInput2" class="form-label">
+                Datum
+              </label>
+              <input
+                type="datetime"
+                name="date"
+                class="form-control"
+                id="currentDate"
+                value="${response.data.date}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="formGroupExampleInput2" class="form-label">
+                Proizvođač
+              </label>
+              <input
+                type="text"
+                name="manufacturer"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.manufacturer}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Vrsta aparata i model
+              </label>
+              <input
+                type="text"
+                name="type"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.type}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Polog EUR
+              </label>
+              <input
+                type="number"
+                name="downpayment"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.downpayment}"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Ukupno EUR
+              </label>
+              <input
+                type="number"
+                name="totalAmount"
+                class="form-control"
+                id="formGroupExampleInput"
+                value="${response.data.totalAmount}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="formGroupExampleInput" class="form-label">
+                Napomena
+              </label>
+              <textarea
+                name="note"
+                class="form-control2"
+                style="height: 200px"
+              >${response.data.note}</textarea>
+            </div>
+
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Zatvori
+              </button>
+              <button
+                id="addNewItemButton"
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                onclick="saveItem(${id})"
+              >
+                Spremi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.append(modal);
 };
 
 /*function handleButtonClick(button) {
