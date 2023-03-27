@@ -129,7 +129,7 @@ const editItem = async (id = "") => {
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
-              Nova stavka
+              ${id !== "" ? "Uredi stavku" : "Nova stavka"}
             </h1>
             <button
               type="button"
@@ -152,7 +152,7 @@ const editItem = async (id = "") => {
                   name="name"
                   class="form-control"
                   id="formGroupExampleInput"
-                  value="${response.data.name}"
+                  value="${id !== "" ? response.data.name : ""}"
                 />
               </div>
 
@@ -246,7 +246,9 @@ const editItem = async (id = "") => {
                   <label for="formGroupExampleInput" class="form-label"
                     >Vraćeno dana</label
                   >
-                  <input type="datetime" name="returnedAt" class="form-control" value="${response.data.returnedAt}"/>
+                  <input type="datetime" name="returnedAt" class="form-control" value="${
+                    response.data.returnedAt
+                  }"/>
                 </div>
 
                 <div class="box mb-3">
@@ -264,7 +266,9 @@ const editItem = async (id = "") => {
                   <label for="formGroupExampleInput" class="form-label"
                     >Narudžba gotova</label
                   >
-                  <input type="datetime" name="orderDoneAt" class="form-control" value="${response.data.orderDoneAt}"/>
+                  <input type="datetime" name="orderDoneAt" class="form-control" value="${
+                    response.data.orderDoneAt
+                  }"/>
                 </div>
               </div>
               <div class="mb-3">
