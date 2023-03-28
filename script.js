@@ -65,7 +65,7 @@ const populateItems = async (data) => {
                 type="button"
                 class="btn btn-outline-danger"
                 data-bs-toggle="modal"
-                data-bs-target="#delete"
+               
                 onclick="deleteItem(${e.id})">delete</button> \
           <button
                 style="padding: 10px"
@@ -126,7 +126,8 @@ const populateItems = async (data) => {
         </h2> \
       </div> \
       <div class="note"> \
-        <p>${e.note}</p> \
+        <h2> Napomena:<h2>
+      <p>${e.note}</p> \
       </div> \
       <div class="buttons">\
               <!-- button uredi stavka -->\
@@ -140,7 +141,7 @@ const populateItems = async (data) => {
               </button> \
             </div> \
       
-      <div>`;
+      </div>`;
 
     itemsContainer.append(item);
   });
