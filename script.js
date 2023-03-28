@@ -12,8 +12,7 @@ const addNewItemButton = document.getElementById("addNewItemButton");
 const statusMsg = document.getElementById("statusMsg");
 const orderHistory = document.getElementById("orderHistory");
 const activeOrders = document.getElementById("activeOrders");
-const allOrders = document.getElementById("allOrders");
-const itemsContainer = document.getElementById("items-container"); // change to whatever element contains the items
+const allOrders = document.getElementById("allOrders"); // change to whatever element contains the items
 
 // function to display message from backend
 const displayStatusMsg = async (message) => {
@@ -42,6 +41,7 @@ const sendRequest = async (url, method, payload) => {
 
 // TODO: change the function to find and populate the desired element (div)
 const populateItems = async (data) => {
+  const itemsContainer = document.getElementById("itemsContainer");
   itemsContainer.innerHTML = "";
   data.forEach((e) => {
     console.log(e.id);
@@ -54,7 +54,7 @@ const populateItems = async (data) => {
         <h2>${e.date}</h2> \
         <div> \
           <button onclick="deleteItem(${e.id})">delete</button> \
-          <button onclick="editItem(${e.id})">edit</button> \
+          <button onclick="addOrEditItem(${e.id})">edit</button> \
           <button>print</button> \
         </div> \
       </div> \
@@ -89,6 +89,7 @@ const populateItems = async (data) => {
       <div class="note"> \
         <p>${e.note}</p> \
       </div>`;
+
     itemsContainer.append(item);
   });
 };
@@ -104,25 +105,28 @@ const deleteItem = async (id) => {
   sendRequest(ip + "items/delete/", "DELETE", payload);
 };
 
-const saveItem = async (id) => {
+const saveItem = async (id = "") => {
   let form = document.getElementById("ItemForm");
   let payload = new FormData(form);
-  payload.append("id", id);
-  const response = await sendRequest(ip + "items/edit/", "PUT", payload);
+  if (id !== "") {
+    payload.append("id", id);
+    const response = await sendRequest(ip + "items/edit/", "PUT", payload);
+    console.log(response);
+    return;
+  }
+  const response = await sendRequest(ip + "items/add/", "POST", payload);
   console.log(response);
+  return;
 };
 
-const editItem = async (id = "") => {
-  const response = await sendRequest(ip + `items/${id}`);
-  console.log(response.data.id);
-  let modal = document.createElement("div");
-  modal.className = "modal fade";
-  modal.id = "modalunesi";
-  modal.setAttribute("data-bs-backdrop", "static");
-  modal.setAttribute("data-bs-keyboard", "false");
-  modal.setAttribute("tabindex", "-1");
-  modal.setAttribute("aria-labelledby", "staticBackdropLabel");
-  modal.setAttribute("aria-hidden", "true");
+// function to open a modal to add or edit a new item
+const addOrEditItem = async (id = "") => {
+  let response;
+  if (id != "") {
+    response = await sendRequest(ip + `items/${id}`);
+    console.log(response.data.id);
+  }
+  let modal = document.getElementById("modalItem");
   modal.innerHTML = `
     <div class="modal-dialog modal-lg"
       >
@@ -165,13 +169,10 @@ const editItem = async (id = "") => {
                   name="customerInfo"
                   class="form-control"
                   id="formGroupExampleInput"
-                  value="${response.data.customerInfo}"
+                  value="${id !== "" ? response.data.customerInfo : ""}"
                 />
               </div>
             </div>
-
-        
-
               <div style="display: grid; grid-template-columns: 35% 65%">
 
               <div class="mb-3">
@@ -183,7 +184,7 @@ const editItem = async (id = "") => {
                   name="manufacturer"
                   class="form-control"
                   id="formGroupExampleInput"
-                  value="${response.data.manufacturer}"
+                  value="${id !== "" ? response.data.manufacturer : ""}"
                 />
               </div>
               <div class="mb-3">
@@ -195,7 +196,7 @@ const editItem = async (id = "") => {
                   name="type"
                   class="form-control"
                   id="formGroupExampleInput"
-                  value="${response.data.type}"
+                  value="${id !== "" ? response.data.type : ""}"
                 />
               </div>
               </div>
@@ -210,7 +211,7 @@ const editItem = async (id = "") => {
                     type="number"
                     name="downpayment"
                     class="form-control"
-                    value="${response.data.downpayment}"
+                    value="${id !== "" ? response.data.downpayment : ""}"
                   />
                 </div>
                 <div class="mb-3">
@@ -221,7 +222,7 @@ const editItem = async (id = "") => {
                     type="number"
                     name="totalAmount"
                     class="form-control"
-                    value="${response.data.totalAmount}"
+                    value="${id !== "" ? response.data.totalAmount : ""}"
                   />
                 </div>
 
@@ -234,7 +235,7 @@ const editItem = async (id = "") => {
                   name="date"
                   class="form-control"
                   id="currentDate"
-                  value="${response.data.date}"
+                  value="${id !== "" ? response.data.date : ""}"
                 />
               </div>
               </div>
@@ -247,7 +248,7 @@ const editItem = async (id = "") => {
                     >Vraćeno dana</label
                   >
                   <input type="datetime" name="returnedAt" class="form-control" value="${
-                    response.data.returnedAt
+                    id !== "" ? response.data.returnedAt : ""
                   }"/>
                 </div>
 
@@ -259,7 +260,7 @@ const editItem = async (id = "") => {
                     type="datetime"
                     name="customerNotifiedAt"
                     class="form-control"
-                    value="${response.data.customerNotifiedAt}"
+                    value="${id !== "" ? response.data.customerNotifiedAt : ""}"
                   />
                 </div>
                 <div class="box mb-3">
@@ -267,7 +268,7 @@ const editItem = async (id = "") => {
                     >Narudžba gotova</label
                   >
                   <input type="datetime" name="orderDoneAt" class="form-control" value="${
-                    response.data.orderDoneAt
+                    id !== "" ? response.data.orderDoneAt : ""
                   }"/>
                 </div>
               </div>
@@ -279,7 +280,7 @@ const editItem = async (id = "") => {
                   name="note"
                   class="form-control2"
                   style="height: 200px"
-                >${response.data.note}</textarea>
+                >${id !== "" ? response.data.note : ""}</textarea>
               </div>
 
               <div class="modal-footer">
@@ -295,7 +296,7 @@ const editItem = async (id = "") => {
                   type="button"
                   class="btn btn-primary"
                   data-bs-dismiss="modal"
-                  onclick="saveItem(${id})"
+                  onclick="${id !== "" ? `saveItem(${id})` : "saveItem()"}"
                 >
                   Spremi
                 </button>
@@ -305,45 +306,5 @@ const editItem = async (id = "") => {
         </div>
       </div>
   `;
-  document.body.append(modal);
+  new bootstrap.Modal(modal).show();
 };
-
-/*function handleButtonClick(button) {
-  button.addEventListener("click", function (e) {
-    e.preventDefault();
-
-    if (button === addNewItemButton) {
-      const payload = new FormData(button);
-      sendRequest("http://192.168.86.127:3000/items/add/", "POST", payload);
-    } else if (button === editItemButton) {
-      const payload = new FormData(button);
-      sendRequest("http://192.168.86.127:3000/items/edit/", "POST", payload);
-    } else if (button === allOrders) {
-      // svi itemi
-      var heading = "Narudžbe: sve";
-      var div = document.getElementById("heading");
-      div.textContent = heading;
-      getData("http://192.168.86.127:3000/items/");
-    } else if (button === orderHistory) {
-      var heading = "Narudžbe: riješene";
-      var div = document.getElementById("heading");
-      div.textContent = heading;
-      getData("http://192.168.86.127:3000/items/"); //urediti url za neaktivne predmete
-    } else if (button === activeOrders) {
-      var heading = "Narudžbe: aktivne";
-      var div = document.getElementById("heading");
-      div.textContent = heading;
-      getData("http://192.168.86.127:3000/items/"); //urediti url za aktivne predmete
-    }
-  });
-}*/
-
-// embed the functions to buttons
-//POZIVANJE FUNKCIJA
-/*
-handleButtonClick(addNewItemButton);
-handleButtonClick(allOrders);
-handleButtonClick(editItemButton);
-handleButtonClick(activeOrders);
-handleButtonClick(orderHistory);
-*/
