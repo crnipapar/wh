@@ -46,17 +46,56 @@ const populateItems = async (data) => {
   data.forEach((e) => {
     console.log(e.id);
     let item = document.createElement("div");
-    item.className = "item-container";
+
     item.innerHTML = `
-      <div class="id"> \
+    
+    <div>
+    <div class="item-container"> \
+    <div class="buttons btn-group-vertical"
+              role="group"
+              aria-label="Vertical button group"> \
+          <button style="padding: 10px"
+                type="button"
+                class="btn btn-outline-dark"
+                data-bs-toggle="modal"
+                
+          
+          onclick="addOrEditItem(${e.id})">edit</button>\
+          <button style="padding: 10px"
+                type="button"
+                class="btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#delete"
+                onclick="deleteItem(${e.id})">delete</button> \
+          <button
+                style="padding: 10px"
+                type="button"
+                class="btn btn-outline-warning"
+                onclick="printContent()"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-printer-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"
+                  />
+                  <path
+                    d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
+                  />
+                </svg>
+              </button> \
+        </div> \
+    <div class="id"> \
         <h1 class="id">${e.id}</h1> \
         <h2 class="id">Datum:</h2> \
         <h2>${e.date}</h2> \
-        <div> \
-          <button onclick="deleteItem(${e.id})">delete</button> \
-          <button onclick="addOrEditItem(${e.id})">edit</button> \
-          <button>print</button> \
-        </div> \
+        
+        
       </div> \
       <div class="basic-info"> \
         <h2> \
@@ -88,7 +127,20 @@ const populateItems = async (data) => {
       </div> \
       <div class="note"> \
         <p>${e.note}</p> \
-      </div>`;
+      </div> \
+      <div class="buttons">\
+              <!-- button uredi stavka -->\
+              <button\
+                type="button" \
+                class="btn btn-outline-dark" \
+                data-bs-toggle="modal" \
+                data-bs-target="#addPart" \
+              > \
+                Dodaj dio \
+              </button> \
+            </div> \
+      
+      <div>`;
 
     itemsContainer.append(item);
   });
@@ -308,3 +360,25 @@ const addOrEditItem = async (id = "") => {
   `;
   new bootstrap.Modal(modal).show();
 };
+
+//FUNKCIJA ZA PRINT
+
+function printContent() {
+  var iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      iframe.contentWindow.document.open();
+      iframe.contentWindow.document.write(this.responseText);
+      iframe.contentWindow.document.close();
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      document.body.removeChild(iframe);
+    }
+  };
+  xhttp.open("GET", "print.html", true);
+  xhttp.send();
+}
