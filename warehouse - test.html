@@ -9,7 +9,12 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js" integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"
+      integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <link rel="stylesheet" href="item.css" />
     <title>Warehouse</title>
   </head>
@@ -17,7 +22,7 @@
     <div class="container-fluid">
       <!-- NASLOV -->
 
-      <div class="row" style="display: grid; grid-template-columns: 70% 30%;">
+      <div class="row" style="display: grid; grid-template-columns: 70% 30%">
         <div
           class="col"
           style="
@@ -25,39 +30,33 @@
             display: flex;
             flex-direction: row;
             margin-top: 20px;
-          
           "
         >
-          <div style="display: flex; padding-left: 20px;">
+          <div style="display: flex; padding-left: 20px">
             <h1>Narudžbe</h1>
             <h1 id="heading"><span></span></h1>
           </div>
 
           <div>
-          <button 
-          class="btn btn-warning btn-lg"
-            style="font-weight: bold"
-          onclick="addOrEditItem();">
-            Nova stavka
-          </button>
+            <button
+              class="btn btn-warning btn-lg"
+              style="font-weight: bold"
+              onclick="addOrEditItem();"
+            >
+              Nova stavka
+            </button>
           </div>
 
-          <div>
-
-          </div>
-
-        
+          <div></div>
         </div>
 
         <!--  BUTTONS FILTERI -->
 
-        <div class="col" style="margin-top: 20px;">
-
+        <div class="col" style="margin-top: 20px">
           <div
             class="btn-group"
             role="group"
             aria-label="Basic outlined example"
-          
           >
             <button
               type="button"
@@ -78,7 +77,6 @@
             <button
               type="button"
               class="btn btn-outline-dark btn-lg"
-              
               onclick="getItemsByOrderStatus(); toggleHeading(': sve')"
             >
               Sve narudžbe
@@ -90,129 +88,9 @@
       <!-- DONJI DIO-->
       <div style="display: grid; grid-template-columns: 70% 30%">
         <!-- STAVKA -->
-        <div id="itemsContainer">
-          <div class="item-container">
-            <!-- BOTUNI -->
-            <div
-              class="btn-group-vertical"
-              role="group"
-              aria-label="Vertical button group"
-            >
-              <!-- button uredi stavka -->
-              <button
-                style="padding: 10px"
-                type="button"
-                class="btn btn-outline-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#edit"
-              >
-                Uredi
-              
-              </button>
+        <div id="itemsContainer"></div>
 
-              <!-- button delete stavka -->
-
-              <button
-                style="padding: 10px"
-                type="button"
-                class="btn btn-outline-danger"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteItem"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-trash"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                  />
-                </svg>
-              </button>
-
-              <!-- button print -->
-
-              <button
-                style="padding: 10px"
-                type="button"
-                class="btn btn-outline-warning"
-                onclick="itemsPrint()"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-printer-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2H5zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1z"
-                  />
-                  <path
-                    d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2V7zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <!-- BROJ DATUM-->
-            <div class="id">
-              <h1 class="id"></h1>
-              <h2 class="id"></h2>
-              <h2></h2>
-            </div>
-
-            <!--  STAVKA BASIC INFO-->
-            <div class="basic-info">
-              <h2>Klijent: <strong></strong></h2>
-              <h2>Proizvođač: <strong></strong></h2>
-              <h2>Aparat: <strong></strong></h2>
-              <h2>Model: <strong></strong></h2>
-            </div>
-
-            <!-- STAVKA DATUMI-->
-
-            <div class="order-info">
-              <h2>Ukupno: <strong></strong></h2>
-              <h2>Polog: <strong></strong></h2>
-              <h2>Obaviješten: <strong></strong></h2>
-              <h2>Gotovo: <strong></strong></h2>
-            </div>
-
-            <!-- STAVKA NAPOMENA-->
-            <div class="note">
-              <h2>Napomena</h2>
-              <p>
-                
-              </p>
-            </div>
-
-            <div class="buttons">
-              <!-- button uredi stavka -->
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#addPart"
-              >
-                Dodaj dio
-              </button>
-            </div>
-
-          
-          </div>
-        </div>
-        <!-- kraj stavki -->
-
-        <!-- DIJELOVI-->
+        <!--                                                        DIJELOVI                            -->
 
         <div class="card item-container2">
           <div class="card-header">Dijelovi</div>
@@ -226,47 +104,37 @@
               deleniti quod? Temporibus?
             </div>
             <div class="parts-date col">
-
-            <div>
               <div>
-                <h2>Došao: <strong>22.3.2023.</strong></h2>
+                <div>
+                  <h2>Došao: <strong>22.3.2023.</strong></h2>
+                </div>
+                <div>
+                  <h2>Isporučen: <strong>20.12.2023.</strong></h2>
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#addPart"
+                >
+                  Uredi dio
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-dark"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deletePart"
+                >
+                  Obriši dio
+                </button>
               </div>
-              <div>
-                <h2>Isporučen: <strong>20.12.2023.</strong></h2>
-              </div>
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#addPart"
-              >
-                Uredi dio
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-dark"
-                data-bs-toggle="modal"
-                data-bs-target="#deletePart"
-              >
-                Obriši dio
-              </button>
-
             </div>
-
-
-
-
-            </div>
-
-
-
-
           </div>
         </div>
       </div>
     </div>
 
-    <!--   MODALI -->
+    <!--                                   MODALI                              -->
 
     <!--   MODAL NOVA/EDIT STAVKA -->
     <div
@@ -277,8 +145,7 @@
       tabindex="-1"
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
-    >
-    </div>
+    ></div>
 
     <!--   MODAL dodaj dio-->
 
@@ -320,8 +187,8 @@
               <div style="display: grid; grid-template-columns: 50% 50%">
                 <div class="box mb-3">
                   <label for="formGroupExampleInput" class="form-label"
-                    >Dio: Došao dana </label
-                  >
+                    >Dio: Došao dana
+                  </label>
                   <input type="date" name="" class="form-control" />
                 </div>
 
@@ -329,14 +196,9 @@
                   <label for="formGroupExampleInput" class="form-label"
                     >Dio: Isporučen dana</label
                   >
-                  <input
-                    type="date"
-                    name=""
-                    class="form-control"
-                  />
+                  <input type="date" name="" class="form-control" />
                 </div>
               </div>
-
             </form>
           </div>
 
@@ -348,9 +210,12 @@
             >
               Zatvori
             </button>
-            <button type="button" id="addPartButton" class="btn btn-primary"
-                              data-bs-dismiss="modal"
->
+            <button
+              type="button"
+              id="addPartButton"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+            >
               Spremi
             </button>
           </div>
@@ -358,10 +223,9 @@
       </div>
     </div>
 
-
     <!--   MODAL uredi dio-->
 
-   <div
+    <div
       class="modal fade"
       id="addPart"
       data-bs-backdrop="static"
@@ -372,9 +236,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title">
-              Dodaj dio
-            </h1>
+            <h1 class="modal-title">Dodaj dio</h1>
 
             <button
               type="button"
@@ -399,8 +261,8 @@
               <div style="display: grid; grid-template-columns: 50% 50%">
                 <div class="box mb-3">
                   <label for="formGroupExampleInput" class="form-label"
-                    >Dio: Došao dana </label
-                  >
+                    >Dio: Došao dana
+                  </label>
                   <input type="date" name="" class="form-control" />
                 </div>
 
@@ -408,13 +270,9 @@
                   <label for="formGroupExampleInput" class="form-label"
                     >Dio: Isporučen dana</label
                   >
-                  <input
-                    type="date"
-                    name=""
-                    class="form-control"
-                  />
+                  <input type="date" name="" class="form-control" />
                 </div>
-
+              </div>
             </form>
           </div>
 
@@ -436,118 +294,10 @@
 
     <p id="statusMsg"></p>
 
-
-
-
-
- <!--
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
-
+    <script type="text/javascript" src="script.js"></script>
     <script>
-      //ZA NOVU STAVKU DATUM DEFAULT VALUE = DANASNJI DAN
-      let currentDate = (document.getElementById("currentDate").valueAsDate =
-        new Date());
-
-      // FUNKCIJA ZA BUTTONE
-      const editItemForm = document.getElementById("editItemForm");
-      const editItemButton = document.getElementById("editItemButton");
-      const addNewItemForm = document.getElementById("addNewItemForm");
-      const addNewItemButton = document.getElementById("addNewItemButton");
-      const statusMsg = document.getElementById("statusMsg");
-      const orderHistory = document.getElementById("orderHistory");
-      const activeOrders = document.getElementById("activeOrders");
-      const allOrders = document.getElementById("allOrders");
-      const dynamicHeadingSpan = document.querySelector("#heading span");
-      const deleteOrder = document.getElementById("deleteOrder");
-      const addPartButton = document.getElementById("addPartButton");
-      const addPartForm = document.getElementById("addPartForm")
-
-      const displayStatusMsg = async (message) => {
-        statusMsg.innerHTML = `
-    <div class="alert alert-success" role="alert" style='display: inline-block;'>
-      ${message}
-    </div>
-  `;
-        await new Promise((r) => setTimeout(r, 3000));
-        statusMsg.innerHTML = "";
-      };
-
-      let items = [];
-
-      const sendRequest = async (url, method, payload) => {
-        try {
-          const response = await fetch(url, {
-            method,
-            body: payload,
-          });
-          const data = await response.json();
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          displayStatusMsg(data.message);
-          return data;
-        } catch (e) {
-          console.error(e);
-        }
-      };
-
-      // nova funkcija za GET metodu i stvarati redove(upiše se url za GET ALL ITEMS ili GET ITEM)
-      async function getData(url, headingText) {
-        const data = await sendRequest(url, "GET", null);
-        items = await data;
-      }
-
-      // FUNKCIJA KOJA PRATI KOJI BUTTON JE KLIKNUT I EXECUTEA SENDREQUEST PO URLU I MIJENJA TEKST
-
-      function handleButtonClick(button) {
-        button.addEventListener("click", function (e) {
-          e.preventDefault();
-
-          if (button === addNewItemButton) {
-            const payload = new FormData(button);
-            sendRequest("http://192.168.1.4:3000/items/add/", "POST", payload);
-          } else if (button === editItemButton) {
-            const payload = new FormData(button);
-            sendRequest("http://192.168.1.4:3000/items/edit/", "POST", payload);
-          } else if (button === allOrders) {
-            // svi itemi
-            dynamicHeadingSpan.textContent = ": sve";
-
-            getData("http://192.168.1.4:3000/items/");
-          } else if (button === orderHistory) {
-            dynamicHeadingSpan.textContent = ": riješene";
-
-            getData("http://192.168.1.4:3000/items/"); //urediti url za neaktivne predmete
-          } else if (button === activeOrders) {
-            dynamicHeadingSpan.textContent = ": aktivne";
-            getData("http://192.168.1.4:3000/items/"); //urediti url za aktivne predmete
-          } else if (button === deleteOrder) {
-            //urediti funkciju  za delete pojedine stavke
-          } else if (button === addPartButton) {
-            //urediti funkciju  za dodati dio 
-          }
-        });
-      }
-
-      //POZIVANJE FUNKCIJA
-      handleButtonClick(addNewItemButton);
-      handleButtonClick(allOrders);
-      handleButtonClick(editItemButton);
-      handleButtonClick(activeOrders);
-      handleButtonClick(orderHistory);
-      handleButtonClick(deleteOrder);
-      handleButtonClick(addPartButton);
-
-
+      document.onload = getItemsByOrderStatus();
+      toggleHeading(": sve");
     </script>
-  -->
-  <script type="text/javascript" src="script.js"></script>
-<script>
-    document.onload = getItemsByOrderStatus(); toggleHeading(': sve') ;
-  </script> 
   </body>
 </html>
