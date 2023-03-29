@@ -1,6 +1,6 @@
 .item-container {
   width: 100%;
-
+  background-color: #fbfaf2;
   border: 2px solid black;
   display: flex;
   flex: row;
@@ -8,36 +8,32 @@
   margin: 10px;
 }
 
-.item-container > div {
-  padding: 18px;
-}
-
 .id {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-basis: 15%;
+  flex-basis: 5%;
   padding: 10px;
-  margin-left: -35px;
 }
 
 .basic-info {
-  flex-basis: 20%;
-  margin-left: -20px;
+  flex-basis: 30%;
+
+  padding: 18px;
 }
 
 .order-info {
   flex-basis: 20%;
-  margin-left: -20px;
+  padding: 18px;
 }
 
 .note {
-  flex-basis: 35%;
-  margin-left: -20px;
+  flex-basis: 30%;
+  padding: 15px;
 }
 
 .buttons {
-  flex-basis: 2%;
+  flex-basis: 4%;
 }
 
 .note > p {
@@ -96,6 +92,7 @@ h1.id {
 .item-container2 {
   width: auto;
   padding: 0;
+  background-color: #fbfaf2;
   border: 2px solid black;
   border-radius: 20px;
   margin: 10px 10px 10px 30px;
@@ -127,7 +124,7 @@ h1.id {
 
 .btn-outline-danger:hover {
   color: #000000;
-  font-weight: bold;
+
   background-color: rgb(241, 135, 48);
   border-color: #000000;
 }

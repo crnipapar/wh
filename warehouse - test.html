@@ -13,47 +13,57 @@
     <link rel="stylesheet" href="item.css" />
     <title>Warehouse</title>
   </head>
-  <body>
+  <body style="background-color: #b0daf3">
     <div class="container-fluid">
       <!-- NASLOV -->
 
-      <div class="row" style="display: grid; grid-template-columns: 65% 35%">
+      <div class="row" style="display: grid; grid-template-columns: 70% 30%;">
         <div
           class="col"
           style="
-            padding: 10px;
+            justify-content: space-between;
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            margin-top: 20px;
+          
           "
         >
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            <h1 style="padding-left: 20px">Narudžbe</h1>
+          <div style="display: flex; padding-left: 20px;">
+            <h1>Narudžbe</h1>
             <h1 id="heading"><span></span></h1>
           </div>
 
+          <div>
           <button 
           class="btn btn-warning btn-lg"
-            style="padding-left: 50px; padding-right: 50px; font-weight: bold"
-          onclick="addOrEditItem()">
+            style="font-weight: bold"
+          onclick="addOrEditItem();">
             Nova stavka
           </button>
+          </div>
+
+          <div>
+
+          </div>
+
+        
+        </div>
+
+        <!--  BUTTONS FILTERI -->
+
+        <div class="col" style="margin-top: 20px;">
 
           <div
             class="btn-group"
             role="group"
             aria-label="Basic outlined example"
+          
           >
             <button
               type="button"
               class="btn btn-outline-dark btn-lg"
               id="activeOrders"
+              onclick="getItemsByOrderStatus(false);toggleHeading(': aktivne')"
             >
               Aktivne narudžbe
             </button>
@@ -61,32 +71,30 @@
               type="button"
               class="btn btn-outline-dark btn-lg"
               id="orderHistory"
+              onclick="getItemsByOrderStatus(true); toggleHeading(': riješene')"
             >
               Riješene narudžbe
             </button>
             <button
               type="button"
               class="btn btn-outline-dark btn-lg"
-              onclick="getAllData()"
+              
+              onclick="getItemsByOrderStatus(); toggleHeading(': sve')"
             >
               Sve narudžbe
             </button>
           </div>
         </div>
-
-        <!--  OVO MORA BITI OVJDE -->
-
-        <div class="col"></div>
       </div>
 
       <!-- DONJI DIO-->
-      <div style="display: grid; grid-template-columns: 65% 35%">
+      <div style="display: grid; grid-template-columns: 70% 30%">
         <!-- STAVKA -->
         <div id="itemsContainer">
           <div class="item-container">
             <!-- BOTUNI -->
             <div
-              class="buttons btn-group-vertical"
+              class="btn-group-vertical"
               role="group"
               aria-label="Vertical button group"
             >
@@ -99,18 +107,7 @@
                 data-bs-target="#edit"
               >
                 Uredi
-                <!-- <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-pen"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"
-                    />
-                  </svg> -->
+              
               </button>
 
               <!-- button delete stavka -->
@@ -120,7 +117,7 @@
                 type="button"
                 class="btn btn-outline-danger"
                 data-bs-toggle="modal"
-                data-bs-target="#delete"
+                data-bs-target="#deleteItem"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -146,7 +143,7 @@
                 style="padding: 10px"
                 type="button"
                 class="btn btn-outline-warning"
-                onclick="printContent()"
+                onclick="itemsPrint()"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -168,34 +165,33 @@
 
             <!-- BROJ DATUM-->
             <div class="id">
-              <h1 class="id">1</h1>
-              <h2 class="id">Datum:</h2>
-              <h2>1. 2. 1234.</h2>
+              <h1 class="id"></h1>
+              <h2 class="id"></h2>
+              <h2></h2>
             </div>
 
             <!--  STAVKA BASIC INFO-->
             <div class="basic-info">
-              <h2>Klijent: <strong>Mateo d.o.o.</strong></h2>
-              <h2>Proizvođač: <strong>Hyundai</strong></h2>
-              <h2>Aparat: <strong>Frižider</strong></h2>
-              <h2>Model: <strong>Frižider</strong></h2>
+              <h2>Klijent: <strong></strong></h2>
+              <h2>Proizvođač: <strong></strong></h2>
+              <h2>Aparat: <strong></strong></h2>
+              <h2>Model: <strong></strong></h2>
             </div>
 
             <!-- STAVKA DATUMI-->
 
             <div class="order-info">
-              <h2>Ukupno: <strong>500 €</strong></h2>
-              <h2>Polog: <strong>350 €</strong></h2>
-              <h2>Obaviješten: <strong>1. 2. 1234.</strong></h2>
-              <h2>Gotovo: <strong>1. 2. 1234.</strong></h2>
+              <h2>Ukupno: <strong></strong></h2>
+              <h2>Polog: <strong></strong></h2>
+              <h2>Obaviješten: <strong></strong></h2>
+              <h2>Gotovo: <strong></strong></h2>
             </div>
 
             <!-- STAVKA NAPOMENA-->
             <div class="note">
               <h2>Napomena</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis
-                hic maio
+                
               </p>
             </div>
 
@@ -211,7 +207,7 @@
               </button>
             </div>
 
-            <!-- BOTUNI ZA DIJELOVE-->
+          
           </div>
         </div>
         <!-- kraj stavki -->
@@ -395,42 +391,13 @@
 
     <!--   MODAL BRIŠI STAVKU-->
 
-    <div class="modal" tabindex="-1" id="delete">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">
-              Jeste li sigurni da želite obrisati stavku?
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div class="modal-body">
-            <div style="display: flex; justify-content: space-between">
-              <button
-                type="button"
-                class="btn btn-outline-dark btn-lg"
-                data-bs-dismiss="modal"
-              >
-                Ne, ne želim
-              </button>
-              <button
-                type="button"
-                class="btn btn-warning btn-lg"
-                data-bs-dismiss="modal"
-                id="deleteOrder"
-              >
-                Potvrdi
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="modal fade" tabindex="-1" id="deleteItem"
+      data-bs-backdrop="false"
+      data-bs-keyboard="false"
+    
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true">
     </div>
 
     <!--   MODAL dodaj dio-->
@@ -695,38 +662,12 @@
       handleButtonClick(deleteOrder);
       handleButtonClick(addPartButton);
 
-      //FUNKCIJA ZA INSERT h1
 
-
-
-
-
-      //FUNKCIJA ZA PRINT
-
-      function printContent() {
-        var iframe = document.createElement("iframe");
-        iframe.style.display = "none";
-        document.body.appendChild(iframe);
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-          if (this.readyState == 4 && this.status == 200) {
-            iframe.contentWindow.document.open();
-            iframe.contentWindow.document.write(this.responseText);
-            iframe.contentWindow.document.close();
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-            document.body.removeChild(iframe);
-          }
-        };
-        xhttp.open("GET", "print.html", true);
-        xhttp.send();
-      }
     </script>
   -->
   <script type="text/javascript" src="script.js"></script>
-  <script>
-    document.onload = getAllData();
-  </script>
+<script>
+    document.onload = getItemsByOrderStatus(); toggleHeading(': sve') ;
+  </script> 
   </body>
 </html>

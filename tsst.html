@@ -1,0 +1,41 @@
+<div class="mb-3">
+  <label for="formGroupExampleInput" class="form-label">Info o klijentu</label>
+  <input type="text" name="customerInfo" class="form-control"
+  id="formGroupExampleInput" value="${id !== "" ? response.data.customerInfo :
+  ""}" />
+</div>
+
+<h2>\ Model: <strong>${e.model}</strong> \</h2>
+\ modal brisi stavku
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Jeste li sigurni da želite obrisati stavku?</h5>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+      ></button>
+    </div>
+
+    <div class="modal-body">
+      <div style="display: flex; justify-content: space-between">
+        <button
+          type="button"
+          class="btn btn-outline-dark btn-lg"
+          data-bs-dismiss="modal"
+        >
+          Ne, ne želim
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning btn-lg"
+          data-bs-dismiss="modal"
+        >
+          Potvrdi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
