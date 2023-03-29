@@ -147,7 +147,6 @@ const populateItems = async (data) => {
             </div>  \
       
       </div>`;
-
     itemsContainer.append(item);
   });
 };
@@ -167,11 +166,8 @@ const getItemsByOrderStatus = async (isOrderDone) => {
 
 //open modal for deletion
 const deleteItem = async (id) => {
-  let modal = document.getElementById("deleteItem");
-
-  // Append modal to body element
-  document.body.appendChild(modal);
-  modal.innerHTML = `
+  let deleteModal = document.getElementById("modalItem");
+  deleteModal.innerHTML = `
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -181,27 +177,22 @@ const deleteItem = async (id) => {
        
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ne želim</button>
-          <button type="button" class="btn btn-warning" onclick="deleteConfirmed(${id})"> Potvrdi</button>
-        </div>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="deleteConfirmed(${id})">Potvrdi</button>
       </div>
     </div>
   `;
 
   // show the modal
-  let bsModal = new bootstrap.Modal(modal, {});
-  bsModal.show();
+  new bootstrap.Modal(deleteModal).show();
 };
 
 //delete stavka
 const deleteConfirmed = async (id) => {
   const payload = new FormData();
   payload.append("id", id);
-  sendRequest(ip + "items/delete/", "DELETE", payload);
-
-  // hide the modal
-  let modal = document.getElementById("deleteItem");
-  let bsModal = bootstrap.Modal.getInstance(modal);
-  bsModal.hide();
+  await sendRequest(ip + "items/delete/", "DELETE", payload);
+  getItemsByOrderStatus();
+  return;
 };
 
 const saveItem = async (id = "") => {
@@ -211,10 +202,12 @@ const saveItem = async (id = "") => {
     payload.append("id", id);
     const response = await sendRequest(ip + "items/edit/", "PUT", payload);
     console.log(response);
+    getItemsByOrderStatus();
     return;
   }
   const response = await sendRequest(ip + "items/add/", "POST", payload);
   console.log(response);
+  getItemsByOrderStatus();
   return;
 };
 
@@ -419,7 +412,7 @@ const itemsPrint = async (id) => {
   </div>
   
   <div style="margin-top: 15px;">
-    <p style="font-size: 20px;">Klijent: <strong> ${e.customerInfo}</strong></p> 
+    <p style="font-size: 20px;">Klijent: <strong> ${e.name}</strong></p> 
     <p>Datum kreiranja narudžbe: ${e.date}</p> \
   
   </div>
@@ -454,4 +447,5 @@ const itemsPrint = async (id) => {
   // Focus on the popup window and initiate print
   printWindow.focus();
   printWindow.print();
+  printWindow.close();
 };

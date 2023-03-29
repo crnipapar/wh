@@ -268,7 +268,7 @@
 
     <!--   MODALI -->
 
-    <!--   MODAL NOVA STAVKA -->
+    <!--   MODAL NOVA/EDIT STAVKA -->
     <div
       class="modal fade"
       id="modalItem"
@@ -278,126 +278,6 @@
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-    </div>
-
-    <!--   MODAL EDIT STAVKA -->
-    <div
-      class="modal fade"
-      id="edit"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
-              Uredi stavku
-            </h1>
-
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div class="modal-body">
-            <form id="editItemForm">
-              <div style="display: grid; grid-template-columns: 50% 50%">
-                <div class="mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Polog EUR</label
-                  >
-                  <input
-                    type="number"
-                    name="downpayment"
-                    class="form-control"
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Ukupno EUR</label
-                  >
-                  <input
-                    type="number"
-                    name="totalAmount"
-                    class="form-control"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="container d-flex"
-                style="display: grid; grid-template-columns: 33% 33% 33%"
-              >
-                <div class="box mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Vraćeno dana</label
-                  >
-                  <input type="date" name="returnedAt" class="form-control" />
-                </div>
-
-                <div class="box mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Klijent obaviješten dana</label
-                  >
-                  <input
-                    type="date"
-                    name="customerNotifiedAt"
-                    class="form-control"
-                  />
-                </div>
-                <div class="box mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Narudžba gotova</label
-                  >
-                  <input type="date" name="orderDoneAt" class="form-control" />
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="formGroupExampleInput" class="form-label"
-                  >Napomena</label
-                >
-                <textarea
-                  name="note"
-                  class="form-control2"
-                  style="height: 200px"
-                ></textarea>
-              </div>
-            </form>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-
-            >
-              Zatvori
-            </button>
-            <button type="button" id="editItemButton" class="btn btn-primary" data-bs-dismiss="modal">
-              Spremi
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!--   MODAL BRIŠI STAVKU-->
-
-    <div class="modal fade" tabindex="-1" id="deleteItem"
-      data-bs-backdrop="false"
-      data-bs-keyboard="false"
-    
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true">
     </div>
 
     <!--   MODAL dodaj dio-->
@@ -492,7 +372,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
+            <h1 class="modal-title">
               Dodaj dio
             </h1>
 
