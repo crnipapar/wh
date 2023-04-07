@@ -49,13 +49,12 @@ const populateItems = async (data) => {
   itemsContainer.innerHTML = "";
 
   data.forEach((e) => {
-    console.log(e.id);
     let item = document.createElement("div");
 
     item.innerHTML = `
     
     <div>
-    <div class="item-container"> \
+    <div class="item-container" onclick="getPartsById(${e.id})"> \
     <div class="id"> \
         <h1 class="id">${e.id}</h1> \
         <h2 class="id">Datum:</h2> \
@@ -121,6 +120,7 @@ const populateItems = async (data) => {
                 data-bs-toggle="modal" \
                 data-bs-target="#addPart"
                 style="font-size: 14px" \
+                onclick="addOrEditPart(${e.id})"
               > \
                 Dodaj dio \
               </button> \
@@ -168,7 +168,6 @@ const getItemsByOrderStatus = async (isOrderDone) => {
   } else if (isOrderDone === "currentMonth") {
     url = `${ip}items/month/`;
   }
-  console.log("Fetching items from URL:", url);
 
   const data = await sendRequest(url, "GET");
   populateItems(data.data);
@@ -479,13 +478,12 @@ const populateParts = async (data) => {
   partsContainer.innerHTML = "";
 
   data.forEach((e) => {
-    console.log(e.id);
     let part = document.createElement("div");
 
     part.innerHTML = `
     <div class="part-container3">
               <div class="parts-info">
-                <h2>Opis <strong> ${e.id}</strong></h2>
+                <h2>Opis <strong> ${e.name}</strong></h2>
               </div>
               <div class="parts-date col">
                 <div>
@@ -519,11 +517,19 @@ const populateParts = async (data) => {
   });
 };
 
-const addOrEditPart = async (id = "") => {
+const getPartsById = async (id) => {
+  let url = ip + `items/parts/${id}`;
+  const payload = new FormData();
+  payload.append("itemID", id);
+  const data = await sendRequest(url, "GET");
+  populateParts(data.data);
+};
+
+const addOrEditPart = async (itemId, partId = "") => {
   let response;
-  if (id != "") {
-    response = await sendRequest(ip + `parts/${id}`);
-    console.log(response.data.id);
+  if (partId != "") {
+    response = await sendRequest(ip + `parts/${partId}}`);
+    console.log(response.data);
   }
   let modal = document.getElementById("modalPart");
   modal.innerHTML = `
