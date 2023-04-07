@@ -74,13 +74,13 @@ const populateItems = async (data) => {
       </div> \
       <div class="order-info"> \
         <h2> \
-          Ukupno EUR: <strong>${e.totalAmount}</strong> \
+          Ukupno EUR:<strong>${e.totalAmount}</strong> \
         </h2> \
         <h2 style="margin-bottom: 20px"> \
-          Polog EUR: <strong>${e.downpayment}</strong> \
+          Polog EUR: <strong >${e.downpayment}</strong> \
         </h2> \
         <h2> \
-          Obaviješten: <strong>${e.customerNotifiedAt}</strong> \
+          Obaviješten: <strong >${e.customerNotifiedAt}</strong> \
         </h2> \
         <h2> \
           Gotovo: <strong>${e.orderDoneAt}</strong> \
@@ -91,33 +91,36 @@ const populateItems = async (data) => {
       </div> \
       
       <div class="buttons" style="display: flex;
-            flex-direction: row; margin: 20px";>
+            flex-direction: row; margin: 20px; max-height: 130px";>
       <div class="btn-group-vertical"
-
+              style="margin-right: 5px"
               role="group"
               aria-label="Vertical button group"> \
           <button
                 type="button"
+                style="font-size: 14px"
                 class="btn btn-outline-dark"
                 data-bs-toggle="modal"
                 
           
-          onclick="addOrEditItem(${e.id})">edit</button>\
+          onclick="addOrEditItem(${e.id})">Edit</button>\
           <button 
                 type="button"
-                class="btn btn-outline-danger"
+                class="btn btn-secondary"
                 data-bs-toggle="modal"
                 data-bs-target="#deleteItem"
+                style="font-size: 14px"
                 onclick="deleteItem(${e.id})"
-                >delete</button> \
+                >Delete</button> \
         </div> \
       <div class="btn-group-vertical">\
             
               <button\
                 type="button" \
-                class="btn btn-outline-dark" \
+                class="btn btn-secondary" \
                 data-bs-toggle="modal" \
-                data-bs-target="#addPart" \
+                data-bs-target="#addPart"
+                style="font-size: 14px" \
               > \
                 Dodaj dio \
               </button> \
@@ -151,12 +154,19 @@ const populateItems = async (data) => {
   });
 };
 
+// gets items by active, non-active, all and current month/year
 const getItemsByOrderStatus = async (isOrderDone) => {
+  const today = new Date();
+  const currentMonth = today.getMonth() + 1; // JavaScript months are zero-based, so we add 1 to get the current month number
+  const currentYear = today.getFullYear();
+
   let url = ip + "items/";
   if (isOrderDone === true) {
     url += "?orderDone=notnull";
   } else if (isOrderDone === false) {
     url += "?orderDone=null";
+  } else if (isOrderDone === "currentMonth") {
+    url = `${ip}items/month/`;
   }
   console.log("Fetching items from URL:", url);
 
@@ -186,7 +196,7 @@ const deleteItem = async (id) => {
   new bootstrap.Modal(deleteModal).show();
 };
 
-//delete stavka
+//delete item and close modal
 const deleteConfirmed = async (id) => {
   const payload = new FormData();
   payload.append("id", id);
@@ -312,7 +322,7 @@ const addOrEditItem = async (id = "") => {
                   >Datum</label
                 >
                 <input
-                  type="datetime"
+                  type="date"
                   name="date"
                   class="form-control"
                   id="currentDate"
@@ -328,7 +338,7 @@ const addOrEditItem = async (id = "") => {
                   <label for="formGroupExampleInput" class="form-label"
                     >Vraćeno dana</label
                   >
-                  <input type="datetime" name="returnedAt" class="form-control" value="${
+                  <input type="date" name="returnedAt" class="form-control" value="${
                     id !== "" ? response.data.returnedAt : ""
                   }"/>
                 </div>
@@ -338,7 +348,7 @@ const addOrEditItem = async (id = "") => {
                     >Klijent obaviješten dana</label
                   >
                   <input
-                    type="datetime"
+                    type="date"
                     name="customerNotifiedAt"
                     class="form-control"
                     value="${id !== "" ? response.data.customerNotifiedAt : ""}"
@@ -346,9 +356,9 @@ const addOrEditItem = async (id = "") => {
                 </div>
                 <div class="box mb-3">
                   <label for="formGroupExampleInput" class="form-label"
-                    >Narudžba gotova</label
+                    >Narudžba gotova (arhiva)</label
                   >
-                  <input type="datetime" name="orderDoneAt" class="form-control" value="${
+                  <input type="date" name="orderDoneAt" class="form-control" value="${
                     id !== "" ? response.data.orderDoneAt : ""
                   }"/>
                 </div>
@@ -448,4 +458,142 @@ const itemsPrint = async (id) => {
   printWindow.focus();
   printWindow.print();
   printWindow.close();
+};
+
+const savePart = async (id = "") => {
+  let form = document.getElementById("PartForm");
+  let payload = new FormData(form);
+  if (id !== "") {
+    payload.append("id", id);
+    const response = await sendRequest(ip + "parts/edit/", "PUT", payload);
+    console.log(response);
+    return;
+  }
+  const response = await sendRequest(ip + "parts/add/", "POST", payload);
+  console.log(response);
+  return;
+};
+
+const populateParts = async (data) => {
+  const partsContainer = document.getElementById("partsContainer");
+  partsContainer.innerHTML = "";
+
+  data.forEach((e) => {
+    console.log(e.id);
+    let part = document.createElement("div");
+
+    part.innerHTML = `
+    <div class="part-container3">
+              <div class="parts-info">
+                <h2>Opis <strong> ${e.id}</strong></h2>
+              </div>
+              <div class="parts-date col">
+                <div>
+                  <div>
+                    <h2>Došao: <strong> ${e.arrivedAt}</strong></h2>
+                  </div>
+                  <div>
+                    <h2>Isporučen: <strong>${e.sentAt}</strong></h2>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addPart"
+                  >
+                    Uredi dio
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-dark"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deletePart"
+                  >
+                    Obriši dio
+                  </button>
+                </div>
+              </div>
+            </div>
+    `;
+    partsContainer.append(part);
+  });
+};
+
+const addOrEditPart = async (id = "") => {
+  let response;
+  if (id != "") {
+    response = await sendRequest(ip + `parts/${id}`);
+    console.log(response.data.id);
+  }
+  let modal = document.getElementById("modalPart");
+  modal.innerHTML = `
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5 mx-auto" id="staticBackdropLabel">
+              ${id !== "" ? "Uredi dio" : "Dodaj dio"}
+            </h1>
+
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="mb-3" style="margin: 20px">
+            <label for="formGroupExampleInput" class="form-label"
+              >Opis dijela</label
+            >
+            <textarea
+              name="note"
+              class="form-control2"
+              style="height: 200px"
+            > ${id !== "" ? response.data.description : ""}</textarea>
+          </div>
+          <div class="modal-body">
+            <form id="PartForm">
+              <div style="display: grid; grid-template-columns: 50% 50%">
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Došao dana
+                  </label>
+                  <input type="date" name="" class="form-control" />
+                  ${id !== "" ? response.data.arrivedAt : ""}
+                </div>
+
+                <div class="box mb-3">
+                  <label for="formGroupExampleInput" class="form-label"
+                    >Dio: Isporučen dana</label
+                  >
+                  <input type="date" class="form-control" />
+                  ${id !== "" ? response.data.sentAt : ""}
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Zatvori
+            </button>
+            <button
+              type="button"
+              id="addPartButton"
+              class="btn btn-primary"
+              data-bs-dismiss="modal"
+              onclick="${id !== "" ? `savePart(${id})` : "savePart()"}"
+            >
+              Spremi
+            </button>
+          </div>
+        </div>
+      </div>
+  `;
+  new bootstrap.Modal(modal).show();
 };
