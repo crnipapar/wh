@@ -1,116 +1,156 @@
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"
+      integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href="item.css" />
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"
-    integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="item.css" />
+    <title>Warehouse</title>
+  </head>
+  <!-- #cfedff  -->
 
-  <title>Warehouse</title>
-</head>
-<!-- #cfedff  -->
+  <body style="background-color: #cfedff">
+    <div class="container-fluid">
+      <!--                                                                    NASLOV                                    -->
 
-<body style="background-color: #cfedff">
-  <div class="container-fluid">
-    <!--                                                                    NASLOV                                    -->
-
-    <div class="row"
-      style="display: grid; grid-template-columns: 70% 30%; background-color: #cfedff; padding-bottom: 20px; margin-bottom: 20px;">
-      <div class="col" style="
+      <div
+        class="row"
+        style="
+          display: grid;
+          grid-template-columns: 70% 30%;
+          background-color: #cfedff;
+          padding-bottom: 20px;
+          margin-bottom: 20px;
+        "
+      >
+        <div
+          class="col"
+          style="
             justify-content: space-between;
             display: flex;
             flex-direction: row;
             margin-top: 20px;
-          ">
-        <div style="display: flex; padding-left: 20px">
-          <h1 style="font-size: 40px; ;">Narudžbe</h1>
-          <h1 id="heading" style="font-size: 40px;">
-            <span></span>
-          </h1>
+          "
+        >
+          <div style="display: flex; padding-left: 20px">
+            <h1 style="font-size: 40px">Narudžbe</h1>
+            <h1 id="heading" style="font-size: 40px">
+              <span></span>
+            </h1>
+          </div>
+
+          <div>
+            <button
+              class="btn btn-warning btn-lg"
+              id="newItemButton"
+              onclick="addOrEditItem();"
+            >
+              Nova stavka
+            </button>
+          </div>
+
+          <div></div>
         </div>
 
-        <div>
-          <button class="btn btn-warning btn-lg" id="newItemButton" onclick="addOrEditItem();">
-            Nova stavka
-          </button>
-        </div>
+        <!--                                                                BUTTONS FILTERI               -->
 
-        <div></div>
+        <div class="col" style="margin-top: 20px; padding-left: 30px">
+          <div
+            style="flex: none"
+            class="btn-group"
+            role="group"
+            aria-label="Basic outlined example"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-lg"
+              onclick="getItemsByOrderStatus(); toggleHeading(': sve'); refreshOtherFunction(getItemsByOrderStatus)"
+            >
+              Sve
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-lg"
+              id="activeOrders"
+              onclick="getItemsByOrderStatus(false); refreshOtherFunction(() => getItemsByOrderStatus(false))"
+            >
+              Aktivne
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-dark btn-lg"
+              id="activeOrders"
+              onclick="getItemsByOrderStatus('currentMonth'); refreshOtherFunction(() => getItemsByOrderStatus('currentMonth'))"
+            >
+              Tekući mjesec
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-lg"
+              id="orderHistory"
+              onclick="getItemsByOrderStatus(true); refreshOtherFunction(() => getItemsByOrderStatus(true))"
+            >
+              Riješene
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!--                                                                BUTTONS FILTERI               -->
+      <!-- GLAVNI DIO-->
+      <div style="display: grid; grid-template-columns: 70% 30%">
+        <div id="itemsContainer"></div>
 
-      <div class="col" style="margin-top: 20px; padding-left: 30px;">
-        <div style="flex:none" class="btn-group" role="group" aria-label="Basic outlined example">
-          <button type="button" class="btn btn-outline-dark btn-lg"
-            onclick="getItemsByOrderStatus(); toggleHeading(': sve'); refreshOtherFunction(getItemsByOrderStatus)">
-            Sve
-          </button>
-          <button type="button" class="btn btn-outline-dark btn-lg" id="activeOrders"
-            onclick="getItemsByOrderStatus(false); refreshOtherFunction(() => getItemsByOrderStatus(false))">
-            Aktivne
-          </button>
+        <!--                                                                     DIJELOVI                                    -->
 
-          <button type="button" class="btn btn-outline-dark btn-lg" id="activeOrders"
-            onclick="getItemsByOrderStatus('currentMonth'); refreshOtherFunction(() => getItemsByOrderStatus('currentMonth'))">
-            Tekući mjesec
-          </button>
-          <button type="button" class="btn btn-secondary btn-lg" id="orderHistory"
-            onclick="getItemsByOrderStatus(true); refreshOtherFunction(() => getItemsByOrderStatus(true))">
-            Riješene
-          </button>
+        <div class="card part-container2">
+          <div class="card-header">Dijelovi</div>
 
+          <!--                                                                     THIS IS GONNA LOOP                                   -->
+          <div id="partsContainer"></div>
         </div>
       </div>
     </div>
 
-    <!-- GLAVNI DIO-->
-    <div style="display: grid; grid-template-columns: 70% 30%">
-      <div id="itemsContainer"></div>
+    <!--                                                                         MODALI                              -->
 
-      <!--                                                                     DIJELOVI                                    -->
+    <!--   MODAL NOVA/EDIT STAVKA -->
+    <div
+      class="modal fade"
+      id="modalItem"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    ></div>
 
-      <div class="card part-container2">
-        <div class="card-header">Dijelovi</div>
+    <p id="statusMsg"></p>
 
-        <!--                                                                     THIS IS GONNA LOOP                                   -->
-        <div id="partsContainer"></div>
-      </div>
-    </div>
-  </div>
+    <script>
+      window.onload = function () {
+        const lastCalledFunctionString =
+          localStorage.getItem("lastCalledFunction");
+        if (lastCalledFunctionString) {
+          lastCalledFunction = eval(`(${lastCalledFunctionString})`);
+          lastCalledFunction();
+        }
+      };
+    </script>
 
-  <!--                                                                         MODALI                              -->
-
-  <!--   MODAL NOVA/EDIT STAVKA -->
-  <div class="modal fade" id="modalItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true"></div>
-
-  <!--   MODAL dodaj dio-->
-
-  <div class="modal fade" id="modalPart" data-bs-backdrop="static" data-bs-keyboard="false"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true"></div>
-
-  <p id="statusMsg"></p>
-
-  <script>
-    window.onload = function () {
-
-      const lastCalledFunctionString = localStorage.getItem('lastCalledFunction');
-      if (lastCalledFunctionString) {
-        lastCalledFunction = eval(`(${lastCalledFunctionString})`);
-        lastCalledFunction();
-      }
-    };
-  </script>
-
-  <script type="text/javascript" src="script.js"></script>
-
-</body>
-
+    <script type="text/javascript" src="script.js"></script>
+  </body>
 </html>

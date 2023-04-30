@@ -270,49 +270,68 @@ function toggleHeading(newText) {
 // Funkcija za populate print
 const itemsPrint = async (id) => {
   const response = await sendRequest(ip + `items/${id}`);
-  const e = response.data;
+  const itemData = response.data;
+
+  const partsResponse = await sendRequest(ip + `items/parts/${id}`);
+  const partsData = partsResponse.data;
 
   // Create new popup window for printing
   const printWindow = window.open("");
 
   // Populate the popup window with content
   printWindow.document.write(`
-    <div>
-    <h2 style="padding-bottom: 25px; border-bottom: 2px solid black;  ;">Narudžba br. ${e.id}</h2>
-  </div>
-  
-  <div style="margin-top: 15px;">
-    <p style="font-size: 20px;">Klijent: <strong> ${e.name}</strong></p> 
-    <p>Datum kreiranja narudžbe: ${e.date}</p> \
-  
-  </div>
-  
-    <div style="margin-top: 30px">
-    <p>Proizvođač: <strong>${e.manufacturer}</strong></p>  
-    <p>Vrsta aparata i model: <strong>${e.type}</strong></p> 
-  </div>
-  
-  
-  <div style="margin-top: 30px">
-  <p>Narudžba gotova dana: <strong> ${e.orderDoneAt}</strong></p>   
-  <p>Klijent obaviješten dana: <strong>${e.customerNotifiedAt}</strong></p> 
-  
-  </div>
-  
-  <div style="margin-top: 50px">
-    <p>Polog EUR: <strong>${e.downpayment}</strong></p>
-    <p>Ukupno EUR: <strong> ${e.totalAmount} </strong></p>
-    
-  </div>
-  
-  
-  <div style="margin-top: 70px; border-top: 1px solid black; font-size: 12px;">
-    <p>Napomena</p>
-    <p>
-      ${e.note}
-    </p>
-  </div>
-  </div>`);
+    <html>
+      <head>
+        <style type="text/css">
+          @media print {
+            @page {
+              size: 57mm auto;
+              margin: 0;
+            }
+            body {
+              font-size: 10pt;
+            }
+            h1, h2, h3 {
+              font-size: 12pt;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div>
+          <h2>Narudžba br. ${itemData.id}</h2>
+        </div>
+        <div>
+          <p>Klijent: <strong>${itemData.name}</strong></p> 
+          <p>Datum kreiranja narudžbe: ${itemData.date}</p> 
+        </div>
+        <div>
+          <p>Proizvođač: <strong>${itemData.manufacturer}</strong></p>  
+          <p>Vrsta aparata i model: <strong>${itemData.type}</strong></p> 
+        </div>
+        <div>
+          <p>Polog EUR: <strong>${itemData.downpayment}</strong></p>
+        </div>
+
+        <div id="partsPrint">
+
+        </div>
+
+      </body>
+    </html>
+  `);
+
+  // Populate parts data
+  const partsContainer = printWindow.document.getElementById("partsPrint");
+  partsData.forEach((part, i) => {
+    const partDiv = document.createElement("div");
+    partDiv.innerHTML = `
+      <div>
+        <h2>Dio ${i + 1}: <strong> ${part.description}</strong></h2>
+      </div>
+    `;
+    partsContainer.append(partDiv);
+  });
 
   // Focus on the popup window and initiate print
   printWindow.focus();
@@ -384,14 +403,14 @@ const populateParts = async (data) => {
                   <button
                   onclick="addOrEditPart('${e.itemFK}', '${e.id}')"
                     type="button"
-                    class="btn btn-outline-dark"
+                    class="btn btn-outline-dark btn-sm"
                     data-bs-toggle="modal"
                   >
                     Uredi dio
                   </button>
                   <button
                     type="button"
-                    class="btn btn-outline-dark"
+                    class="btn btn-outline-dark btn-sm"
                     data-bs-toggle="modal"
                     onclick="deletePart('${e.itemFK}', '${e.id}');" 
                   >
@@ -742,3 +761,26 @@ document.addEventListener("DOMContentLoaded", () => {
     dateInput.value = formattedDate;
   }
 });
+
+const test = async (id) => {
+  let url = ip + `items/parts/${id}`;
+  const payload = new FormData();
+  payload.append("itemID", id);
+  const data = await sendRequest(url, "GET");
+  populatePartsPrint(data.data);
+};
+
+const populatePartsPrint = async (data) => {
+  const partsContainer = document.getElementById("partsPrint");
+  partsContainer.innerHTML = "";
+  data.forEach((e) => {
+    let part = document.createElement("div");
+
+    part.innerHTML = `
+    <div>
+      <h2>Dio ${e.id}: <strong> ${e.description}</strong></h2>
+      </div>
+    `;
+    partsContainer.append(part);
+  });
+};
