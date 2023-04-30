@@ -100,13 +100,14 @@ h1.id {
 .part-container3 {
   width: 100%;
   display: flex;
-  flex: row;
   padding-left: 10px;
   padding-top: 10px;
+  justify-content: space-between;
+  border-bottom: rgb(170, 170, 170) 3px dotted;
 }
 
 .parts-info {
-  flex-basis: 65%;
+  flex-basis: 95%;
   border-right: 2px black;
   padding: 10px;
 }
@@ -149,10 +150,9 @@ h1.id {
   background-color: transparent;
 }
 
-
 .btn-outline-dark {
   color: #212529;
-  background-color:rgba(236, 237, 252, 0.733) ;
+  background-color: rgba(236, 237, 252, 0.733);
   background-image: none;
   border-color: #212529;
 }
@@ -170,4 +170,3 @@ h1.id {
   color: #212529;
   background-color: transparent;
 }
-

@@ -1,5 +1,3 @@
-//ZA NOVU STAVKU DATUM DEFAULT VALUE = DANASNJI DAN
-
 const ip = "http://127.0.0.1:3000/";
 
 // html nodes variables
@@ -204,6 +202,35 @@ const deleteConfirmed = async (id) => {
   return;
 };
 
+const deletePart = async (itemFK, id) => {
+  let deleteModal = document.getElementById("modalPart");
+  deleteModal.innerHTML = `
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Jeste li sigurni da želite obrisati ovu stavku?</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ne želim</button>
+          <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="deletePartConfirmed(${itemFK}, ${id})">Potvrdi</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // show the modal
+  new bootstrap.Modal(deleteModal).show();
+};
+
+const deletePartConfirmed = async (itemFK, id) => {
+  const response = await sendRequest(
+    ip + `parts/${id}?itemFK=${itemFK}`,
+    "DELETE"
+  );
+  console.log(response);
+};
+
 // FUNCTION FOR REFRESHING THE LAST VIEWED PAGES by criteria: last button pressed = last triggered function is getting refreshed
 let lastCalledFunction = getItemsByOrderStatus; // initially set to default function
 
@@ -329,17 +356,31 @@ const populateParts = async (data) => {
 
     part.innerHTML = `
     <div class="part-container3">
-              <div class="parts-info">
-                <h2>Opis <strong> ${e.description}</strong></h2>
+              <div class="parts-info row">
+                <h2 style="padding-bottom: 15px">Opis: <strong> ${e.description}</strong></h2>
+                <div class="d-flex">
+  <div class="col-sm-6">
+    <h2>Došao:</h2>
+  </div>
+  <div class="col-sm-6">
+    <h2><strong>${e.arrivedAt}</strong></h2>
+  </div>
+</div>
+
+<div class="d-flex">
+  <div class="col-sm-6">
+    <h2>Isporučen:</h2>
+  </div>
+  <div class="col-sm-6">
+    <h2><strong>${e.sentAt}</strong></h2>
+  </div>
+</div>
+
+
+  
               </div>
-              <div class="parts-date col">
+              <div class="parts-date row">
                 <div>
-                  <div>
-                    <h2>Došao: <strong> ${e.arrivedAt}</strong></h2>
-                  </div>
-                  <div>
-                    <h2>Isporučen: <strong>${e.sentAt}</strong></h2>
-                  </div>
                   <button
                   onclick="addOrEditPart('${e.itemFK}', '${e.id}')"
                     type="button"
@@ -352,7 +393,7 @@ const populateParts = async (data) => {
                     type="button"
                     class="btn btn-outline-dark"
                     data-bs-toggle="modal"
-                    data-bs-target="#deletePart"
+                    onclick="deletePart('${e.itemFK}', '${e.id}');" 
                   >
                     Obriši dio
                   </button>
