@@ -148,3 +148,26 @@ h1.id {
   color: #ffc107;
   background-color: transparent;
 }
+
+
+.btn-outline-dark {
+  color: #212529;
+  background-color:rgba(236, 237, 252, 0.733) ;
+  background-image: none;
+  border-color: #212529;
+}
+.btn-outline-dark:hover {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+.btn-outline-dark:focus,
+.btn-outline-dark.focus {
+  box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.5);
+}
+.btn-outline-dark.disabled,
+.btn-outline-dark:disabled {
+  color: #212529;
+  background-color: transparent;
+}
+

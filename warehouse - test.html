@@ -1,250 +1,116 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"
-      integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <link rel="stylesheet" href="item.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Warehouse</title>
-  </head>
-  <!-- #cfedff  -->
-  <body style="background-color: #cfedff">
-    <div class="container-fluid">
-      <!--                                                                    NASLOV                                    -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"
+    integrity="sha512-eHx4nbBTkIr2i0m9SANm/cczPESd0DUEcfl84JpIuutE6oDxPhXvskMR08Wmvmfx5wUpVjlWdi82G5YLvqqJdA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="item.css" />
 
-      <div class="row" style="display: grid; grid-template-columns: 70% 30%">
-        <div
-          class="col"
-          style="
+  <title>Warehouse</title>
+</head>
+<!-- #cfedff  -->
+
+<body style="background-color: #cfedff">
+  <div class="container-fluid">
+    <!--                                                                    NASLOV                                    -->
+
+    <div class="row"
+      style="display: grid; grid-template-columns: 70% 30%; background-color: #cfedff; padding-bottom: 20px; margin-bottom: 20px;">
+      <div class="col" style="
             justify-content: space-between;
             display: flex;
             flex-direction: row;
             margin-top: 20px;
-          "
-        >
-          <div style="display: flex; padding-left: 20px">
-            <h1 style="font-size: 40px">Narudžbe</h1>
-            <h1 id="heading" style="font-size: 40px">
-              <span></span>
-            </h1>
-          </div>
-
-          <div>
-            <button class="btn btn-primary btn-lg" onclick="addOrEditItem();">
-              Nova stavka
-            </button>
-          </div>
-
-          <div></div>
+          ">
+        <div style="display: flex; padding-left: 20px">
+          <h1 style="font-size: 40px; ;">Narudžbe</h1>
+          <h1 id="heading" style="font-size: 40px;">
+            <span></span>
+          </h1>
         </div>
 
-        <!--                                                                BUTTONS FILTERI               -->
-
-        <div class="col" style="margin-top: 20px">
-          <div
-            class="btn-group"
-            role="group"
-            aria-label="Basic outlined example"
-          >
-            <button
-              type="button"
-              class="btn btn-dark"
-              id="activeOrders"
-              onclick="getItemsByOrderStatus('currentMonth'); toggleHeading(': tekući mjesec')"
-            >
-              Tekući mjesec
-            </button>
-
-            <button
-              type="button"
-              class="btn btn-secondary"
-              id="activeOrders"
-              onclick="getItemsByOrderStatus(false);toggleHeading(': aktivne')"
-            >
-              Aktivne narudžbe
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-dark"
-              id="orderHistory"
-              onclick="getItemsByOrderStatus(true); toggleHeading(': riješene')"
-            >
-              Riješene narudžbe
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-dark"
-              onclick="getItemsByOrderStatus(); toggleHeading(': sve')"
-            >
-              Sve narudžbe
-            </button>
-          </div>
+        <div>
+          <button class="btn btn-warning btn-lg" id="newItemButton" onclick="addOrEditItem();">
+            Nova stavka
+          </button>
         </div>
+
+        <div></div>
       </div>
 
-      <!-- GLAVNI DIO-->
-      <div style="display: grid; grid-template-columns: 70% 30%">
-        <div id="itemsContainer"></div>
+      <!--                                                                BUTTONS FILTERI               -->
 
-        <!--                                                                     DIJELOVI                                    -->
+      <div class="col" style="margin-top: 20px; padding-left: 30px;">
+        <div style="flex:none" class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" class="btn btn-outline-dark btn-lg"
+            onclick="getItemsByOrderStatus(); toggleHeading(': sve'); refreshOtherFunction(getItemsByOrderStatus)">
+            Sve
+          </button>
+          <button type="button" class="btn btn-outline-dark btn-lg" id="activeOrders"
+            onclick="getItemsByOrderStatus(false); refreshOtherFunction(() => getItemsByOrderStatus(false))">
+            Aktivne
+          </button>
 
-        <div class="card part-container2">
-          <div class="card-header">Dijelovi</div>
+          <button type="button" class="btn btn-outline-dark btn-lg" id="activeOrders"
+            onclick="getItemsByOrderStatus('currentMonth'); refreshOtherFunction(() => getItemsByOrderStatus('currentMonth'))">
+            Tekući mjesec
+          </button>
+          <button type="button" class="btn btn-secondary btn-lg" id="orderHistory"
+            onclick="getItemsByOrderStatus(true); refreshOtherFunction(() => getItemsByOrderStatus(true))">
+            Riješene
+          </button>
 
-          <!--                                                                     THIS IS GONNA LOOP                                   -->
-          <div id="partsContainer">
-            <div class="part-container3">
-              <div class="parts-info">
-                <h2>Opis <strong>1 </strong></h2>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Provident natus corrupti necessitatibus inventore sapiente,
-                error similique, facilis magnam officiis ut odio enim. Odio vero
-                quia facilis illo deleniti quod? Temporibus?
-              </div>
-              <div class="parts-date col">
-                <div>
-                  <div>
-                    <h2>Došao: <strong>22.3.2023.</strong></h2>
-                  </div>
-                  <div>
-                    <h2>Isporučen: <strong>20.12.2023.</strong></h2>
-                  </div>
-                  <button
-                    type="button"
-                    class="btn btn-outline-dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#addPart"
-                  >
-                    Uredi dio
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-outline-dark"
-                    data-bs-toggle="modal"
-                    data-bs-target="#deletePart"
-                  >
-                    Obriši dio
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
 
-    <!--                                                                         MODALI                              -->
+    <!-- GLAVNI DIO-->
+    <div style="display: grid; grid-template-columns: 70% 30%">
+      <div id="itemsContainer"></div>
 
-    <!--   MODAL NOVA/EDIT STAVKA -->
-    <div
-      class="modal fade"
-      id="modalItem"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    ></div>
+      <!--                                                                     DIJELOVI                                    -->
 
-    <!--   MODAL dodaj dio-->
+      <div class="card part-container2">
+        <div class="card-header">Dijelovi</div>
 
-    <div
-      class="modal fade"
-      id="modalPart"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    ></div>
-
-    <!--   MODAL uredi dio-->
-
-    <div
-      class="modal fade"
-      id="addPart"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title">Dodaj dio</h1>
-
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div class="mb-3" style="margin: 20px">
-            <label for="formGroupExampleInput" class="form-label"
-              >Opis dijela</label
-            >
-            <textarea
-              name="note"
-              class="form-control2"
-              style="height: 200px"
-            ></textarea>
-          </div>
-          <div class="modal-body">
-            <form id="addPartButton">
-              <div style="display: grid; grid-template-columns: 50% 50%">
-                <div class="box mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Dio: Došao dana
-                  </label>
-                  <input type="date" name="" class="form-control" />
-                </div>
-
-                <div class="box mb-3">
-                  <label for="formGroupExampleInput" class="form-label"
-                    >Dio: Isporučen dana</label
-                  >
-                  <input type="date" name="" class="form-control" />
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Zatvori
-            </button>
-            <button type="button" id="addPartButton" class="btn btn-primary">
-              Spremi
-            </button>
-          </div>
-        </div>
+        <!--                                                                     THIS IS GONNA LOOP                                   -->
+        <div id="partsContainer"></div>
       </div>
     </div>
+  </div>
 
-    <p id="statusMsg"></p>
+  <!--                                                                         MODALI                              -->
 
-    <script type="text/javascript" src="script.js"></script>
-    <script>
-      document.onload = getItemsByOrderStatus();
-      toggleHeading(": sve");
-    </script>
-  </body>
+  <!--   MODAL NOVA/EDIT STAVKA -->
+  <div class="modal fade" id="modalItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true"></div>
+
+  <!--   MODAL dodaj dio-->
+
+  <div class="modal fade" id="modalPart" data-bs-backdrop="static" data-bs-keyboard="false"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true"></div>
+
+  <p id="statusMsg"></p>
+
+  <script>
+    window.onload = function () {
+
+      const lastCalledFunctionString = localStorage.getItem('lastCalledFunction');
+      if (lastCalledFunctionString) {
+        lastCalledFunction = eval(`(${lastCalledFunctionString})`);
+        lastCalledFunction();
+      }
+    };
+  </script>
+
+  <script type="text/javascript" src="script.js"></script>
+
+</body>
+
 </html>
