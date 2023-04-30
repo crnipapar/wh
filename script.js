@@ -44,7 +44,7 @@ const populateItems = async (data) => {
   const itemsContainer = document.getElementById("itemsContainer");
   itemsContainer.innerHTML = "";
 
-  data.forEach((e) => {
+  data.forEach((e, i) => {
     let item = document.createElement("div");
 
     item.innerHTML = `
@@ -298,24 +298,37 @@ const itemsPrint = async (id) => {
         </style>
       </head>
       <body>
-        <div>
-          <h2>Narudžba br. ${itemData.id}</h2>
+        <div style="width: 2.25in;">
+        
+  
+  <p style="margin: 0; padding: 0;">Unuk Elektro OIB: 98713733080</p>
+  <p style="margin: 0; padding: 0;">Prodaja rezervnih dijelova</p>
+  <p style="margin: 0; padding: 0;">M. Barača 10A 51000 Rijeka</p>
+  <p style="margin: 0; padding: 0;">prodaja@unukelektro.com</p>
+  <p style="margin: 0; padding: 0;">051672150 # 0917990950</p>
+
+
+
+          <h2>POTVRDA narudžbe br. ${itemData.id}</h2>
+          <h2>${itemData.date}</h2>
         </div>
         <div>
           <p>Klijent: <strong>${itemData.name}</strong></p> 
-          <p>Datum kreiranja narudžbe: ${itemData.date}</p> 
-        </div>
-        <div>
-          <p>Proizvođač: <strong>${itemData.manufacturer}</strong></p>  
-          <p>Vrsta aparata i model: <strong>${itemData.type}</strong></p> 
-        </div>
-        <div>
           <p>Polog EUR: <strong>${itemData.downpayment}</strong></p>
+          <p>Proizvođač: ${itemData.manufacturer}</p>  
+          <p>Vrsta aparata i model: ${itemData.type}</p> 
         </div>
 
         <div id="partsPrint">
-
         </div>
+        <div style="width: 2.25in;">
+  Krajnji rok isporuke robe je 45 dana 
+  Prije toga ne vršimo povrat avansa
+  Stranka je dužna u roku od 15 dana 
+  od nabavke dijela preuzeti isti
+  <p style="border-bottom: black 2px dotted">OVO NIJE FISKALIZIRANI RAČUN </p> 
+</div>
+
 
       </body>
     </html>
@@ -327,7 +340,7 @@ const itemsPrint = async (id) => {
     const partDiv = document.createElement("div");
     partDiv.innerHTML = `
       <div>
-        <h2>Dio ${i + 1}: <strong> ${part.description}</strong></h2>
+        <p>Dio ${i + 1}: ${part.description}</p>
       </div>
     `;
     partsContainer.append(partDiv);
@@ -375,7 +388,7 @@ const populateParts = async (data) => {
 
     part.innerHTML = `
     <div class="part-container3">
-              <div class="parts-info row">
+              <div class="parts-info row" style="margin-bottom:">
                 <h2 style="padding-bottom: 15px">Opis: <strong> ${e.description}</strong></h2>
                 <div class="d-flex">
   <div class="col-sm-6">
@@ -568,7 +581,21 @@ const addOrEditItem = async (id = "") => {
                   class="form-control"
                   id="formGroupExampleInput"
                   value="${id !== "" ? response.data.manufacturer : ""}"
+                  list="manufacturer-list"
                 />
+                <datalist id="manufacturer-list">
+    <option value="Electrolux"></option>
+    <option value="Gorenje"></option>
+    <option value="Whirpool"></option>
+    <option value="Zanussi"></option>
+    <option value="Samsung"></option>
+    <option value="Hisense"></option>
+    <option value="Bosch"></option>
+    <option value="Candy"></option>
+
+
+
+  </datalist>
               </div>
               <div class="mb-3">
                 <label for="formGroupExampleInput" class="form-label"
@@ -761,26 +788,3 @@ document.addEventListener("DOMContentLoaded", () => {
     dateInput.value = formattedDate;
   }
 });
-
-const test = async (id) => {
-  let url = ip + `items/parts/${id}`;
-  const payload = new FormData();
-  payload.append("itemID", id);
-  const data = await sendRequest(url, "GET");
-  populatePartsPrint(data.data);
-};
-
-const populatePartsPrint = async (data) => {
-  const partsContainer = document.getElementById("partsPrint");
-  partsContainer.innerHTML = "";
-  data.forEach((e) => {
-    let part = document.createElement("div");
-
-    part.innerHTML = `
-    <div>
-      <h2>Dio ${e.id}: <strong> ${e.description}</strong></h2>
-      </div>
-    `;
-    partsContainer.append(part);
-  });
-};
