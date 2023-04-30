@@ -203,7 +203,7 @@ const deleteConfirmed = async (id) => {
 };
 
 const deletePart = async (itemFK, id) => {
-  let deleteModal = document.getElementById("modalPart");
+  let deleteModal = document.getElementById("modalItem");
   deleteModal.innerHTML = `
     <div class="modal-dialog">
       <div class="modal-content">
@@ -413,7 +413,7 @@ const addOrEditPart = async (itemFK, id = "") => {
     console.log("Value of description field: " + response.data.description);
   }
 
-  let modal = document.getElementById("modalPart");
+  let modal = document.getElementById("modalItem");
   modal.innerHTML = `
     <div class="modal-dialog">
         <div class="modal-content">
@@ -683,20 +683,34 @@ const addOrEditItem = async (id = "") => {
   new bootstrap.Modal(modal).show();
 };
 
+// Set a global flag variable to indicate whether the modal is open or not
+let isModalOpen = false;
+
+// Add an event listener for the "shown.bs.modal" event
+document
+  .getElementById("modalItem")
+  .addEventListener("shown.bs.modal", function () {
+    isModalOpen = true;
+  });
+
+// Add an event listener for the "hidden.bs.modal" event
+document
+  .getElementById("modalItem")
+  .addEventListener("hidden.bs.modal", function () {
+    isModalOpen = false;
+  });
+
+// Add an event listener for the "keydown" event
 document.addEventListener("keydown", function (event) {
   // Check if the other modal is open
   const otherModalBackdrop = document
-    .getElementById("modalPart")
+    .getElementById("modalItem")
     .querySelector(".modal-backdrop");
   const otherModal = document
-    .getElementById("modalPart")
+    .getElementById("modalItem")
     .querySelector(".modal.show");
 
-  if (
-    otherModalBackdrop ||
-    otherModal ||
-    document.getElementById("modalPart").classList.contains("show")
-  ) {
+  if (isModalOpen || otherModalBackdrop || otherModal) {
     return;
   }
 
