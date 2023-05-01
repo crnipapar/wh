@@ -19,10 +19,24 @@
     <link rel="stylesheet" href="item.css" />
 
     <title>Warehouse</title>
+
+    <style>
+      /* Light theme */
+      body.light-theme {
+        background-color: #cfedff;
+        color: #333;
+      }
+
+      /* Dark theme */
+      body.dark-theme {
+        background-color: #383838;
+        color: #333;
+      }
+    </style>
   </head>
   <!-- #cfedff  -->
 
-  <body style="background-color: #cfedff">
+  <body class="light-theme">
     <div class="container-fluid">
       <!--                                                                    NASLOV                                    -->
 
@@ -46,7 +60,10 @@
             margin-top: 20px;
           "
         >
-          <div style="display: flex; padding-left: 20px">
+          <div
+            onclick="toggleTheme()"
+            style="display: flex; padding-left: 20px"
+          >
             <h1 style="font-size: 40px">Narudžbe</h1>
             <h1 id="heading" style="font-size: 40px">
               <span></span>
