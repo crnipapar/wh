@@ -10,17 +10,6 @@ const orderHistory = document.getElementById("orderHistory");
 const activeOrders = document.getElementById("activeOrders");
 const allOrders = document.getElementById("allOrders");
 
-// function to display message from backend
-const displayStatusMsg = async (message) => {
-  statusMsg.innerHTML = `
-    <div class="alert alert-success" role="alert" style='display: inline-block;'>
-      ${message}
-    </div>
-  `;
-  await new Promise((r) => setTimeout(r, 3000));
-  statusMsg.innerHTML = "";
-};
-
 // function to send a request to backend
 const sendRequest = async (url, method, payload) => {
   try {
@@ -32,7 +21,6 @@ const sendRequest = async (url, method, payload) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    displayStatusMsg(data.message);
     return data;
   } catch (e) {
     console.error(e);
@@ -152,9 +140,9 @@ const populateItems = async (data) => {
 
 // gets items by active, non-active, all and current month/year
 const getItemsByOrderStatus = async (isOrderDone) => {
-  const today = new Date();
-  const currentMonth = today.getMonth() + 1; // JavaScript months are zero-based, so we add 1 to get the current month number
-  const currentYear = today.getFullYear();
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // JavaScript months are zero-based, so we add 1 to get the current month number
+  const currentYear = currentDate.getFullYear();
 
   let url = ip + "items/";
   if (isOrderDone === true) {
@@ -271,7 +259,6 @@ function toggleHeading(newText) {
 const itemsPrint = async (id) => {
   const response = await sendRequest(ip + `items/${id}`);
   const itemData = response.data;
-
   const partsResponse = await sendRequest(ip + `items/parts/${id}`);
   const partsData = partsResponse.data;
 
@@ -588,13 +575,15 @@ const addOrEditItem = async (id = "") => {
     <option value="Gorenje"></option>
     <option value="Whirpool"></option>
     <option value="Zanussi"></option>
+    <option value="Končar"></option>
     <option value="Samsung"></option>
     <option value="Hisense"></option>
     <option value="Bosch"></option>
     <option value="Candy"></option>
-
-
-
+    <option value="Haier"></option>
+    <option value="LG"></option>
+    <option value="Midea"></option>
+    <option value="Indesit"></option>
   </datalist>
               </div>
               <div class="mb-3">
@@ -787,4 +776,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }`;
     dateInput.value = formattedDate;
   }
+});
+
+const getItemsByMonth = async (month, year) => {
+  const url = `${ip}items/${year}/${month}/`;
+  console.log("url: " + url);
+  const data = await sendRequest(url, "GET");
+  populateItems(data.data);
+};
+
+const filterButton = document.getElementById("filter-button");
+const monthSelect = document.getElementById("month-select");
+const yearSelect = document.getElementById("year-select");
+
+filterButton.addEventListener("click", () => {
+  const selectedMonth = parseInt(monthSelect.value);
+  const selectedYear = parseInt(yearSelect.value);
+
+  getItemsByMonth(selectedMonth, selectedYear);
 });
