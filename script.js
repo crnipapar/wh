@@ -791,7 +791,7 @@ const getItemsByMonth = async (month, year) => {
   const url = `${ip}items/${year}/${month}/`;
   const data = await sendRequest(url, "GET");
   populateItems(data.data);
-  toggleHeading(": " + `${month}. ${year}`);
+  toggleHeading(": " + `${month}. mj. ${year}`);
 };
 
 const filterButton = document.getElementById("filter-button");

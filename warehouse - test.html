@@ -31,9 +31,10 @@
         style="
           display: grid;
           grid-template-columns: 70% 30%;
-          background-color: #cfedff;
+          background-color: #95cff3;
           padding-bottom: 20px;
           margin-bottom: 20px;
+          border-bottom: 6px groove rgb(12, 12, 12);
         "
       >
         <div
@@ -57,8 +58,8 @@
               style="
                 position: fixed;
                 top: 20px;
-                left: 50%;
-                transform: translateX(-80%);
+                left: 40%;
+                transform: translateX(-50%);
               "
               class="btn btn-warning btn-lg"
               id="newItemButton"
@@ -68,8 +69,8 @@
             </button>
           </div>
 
-          <div>
-            <label for="month-select">Mjesec:</label>
+          <div style="padding-top: 5px">
+            <label for="month-select"> <h2>Mjesec:</h2></label>
             <select id="month-select">
               <option value="01">January</option>
               <option value="02">February</option>
@@ -95,6 +96,7 @@
               <option value="2030">2030</option>
             </select>
             <button
+              class="btn btn-dark"
               onclick="refreshOtherFunction(() => getItemsByMonth(selectedMonth, selectedYear))"
               id="filter-button"
             >
