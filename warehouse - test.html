@@ -54,14 +54,22 @@
 
           <div>
             <button
+              style="
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-80%);
+              "
               class="btn btn-warning btn-lg"
               id="newItemButton"
               onclick="addOrEditItem();"
             >
               Nova stavka
             </button>
+          </div>
 
-            <label for="month-select">Select a month:</label>
+          <div>
+            <label for="month-select">Mjesec:</label>
             <select id="month-select">
               <option value="01">January</option>
               <option value="02">February</option>
@@ -80,11 +88,19 @@
               <option value="2023">2023</option>
               <option value="2024">2024</option>
               <option value="2025">2025</option>
+              <option value="2026">2026</option>
+              <option value="2027">2027</option>
+              <option value="2028">2028</option>
+              <option value="2029">2029</option>
+              <option value="2030">2030</option>
             </select>
-            <button id="filter-button">Filter</button>
+            <button
+              onclick="refreshOtherFunction(() => getItemsByMonth(selectedMonth, selectedYear))"
+              id="filter-button"
+            >
+              Filter
+            </button>
           </div>
-
-          <div></div>
         </div>
 
         <!--                                                                BUTTONS FILTERI               -->
@@ -99,7 +115,7 @@
             <button
               type="button"
               class="btn btn-outline-dark btn-lg"
-              onclick="getItemsByOrderStatus(); toggleHeading(': sve'); refreshOtherFunction(getItemsByOrderStatus)"
+              onclick="getItemsByOrderStatus(); toggleHeading(': sve'); refreshOtherFunction(() => getItemsByOrderStatus())"
             >
               Sve
             </button>
@@ -139,7 +155,7 @@
         <!--                                                                     DIJELOVI                                    -->
 
         <div class="card part-container2">
-          <div class="card-header">Dijelovi</div>
+          <div class="card-header" id="item-fk-value">Dijelovi</div>
 
           <!--                                                                     THIS IS GONNA LOOP                                   -->
           <div id="partsContainer"></div>

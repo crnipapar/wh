@@ -32,7 +32,7 @@ const populateItems = async (data) => {
   const itemsContainer = document.getElementById("itemsContainer");
   itemsContainer.innerHTML = "";
 
-  data.forEach((e, i) => {
+  data.forEach((e) => {
     let item = document.createElement("div");
 
     item.innerHTML = `
@@ -159,6 +159,12 @@ const getItemsByOrderStatus = async (isOrderDone) => {
   const data = await sendRequest(url, "GET");
   populateItems(data.data);
 };
+
+// const getItemsByMonth = async (month, year) => {
+//   const url = `${ip}items/${year}/${month}/`;
+//   const data = await sendRequest(url, "GET");
+//   populateItems(data.data);
+// };
 
 //open modal for deletion
 const deleteItem = async (id) => {
@@ -345,6 +351,9 @@ const getPartsById = async (id) => {
   payload.append("itemID", id);
   const data = await sendRequest(url, "GET");
   populateParts(data.data);
+  console.log(data.data[0].itemFK);
+  const itemFKValueElement = document.getElementById("item-fk-value");
+  itemFKValueElement.textContent = "Dijelovi: " + data.data[0].itemFK;
 };
 
 // const savePart = async (id = "") => {
@@ -780,9 +789,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const getItemsByMonth = async (month, year) => {
   const url = `${ip}items/${year}/${month}/`;
-  console.log("url: " + url);
   const data = await sendRequest(url, "GET");
   populateItems(data.data);
+  toggleHeading(": " + `${month}. ${year}`);
 };
 
 const filterButton = document.getElementById("filter-button");
