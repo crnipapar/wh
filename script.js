@@ -346,14 +346,16 @@ const itemsPrint = async (id) => {
 };
 
 const getPartsById = async (id) => {
+  const itemFKValueElement = document.getElementById("item-fk-value");
+  console.log(id);
+  itemFKValueElement.textContent = "Dijelovi: " + id;
   let url = ip + `items/parts/${id}`;
   const payload = new FormData();
   payload.append("itemID", id);
   const data = await sendRequest(url, "GET");
   populateParts(data.data);
-  console.log(data.data[0].itemFK);
-  const itemFKValueElement = document.getElementById("item-fk-value");
-  itemFKValueElement.textContent = "Dijelovi: " + data.data[0].itemFK;
+  lastEnteredId = id;
+  localStorage.setItem("lastEnteredId", id);
 };
 
 // const savePart = async (id = "") => {
@@ -709,11 +711,7 @@ const addOrEditItem = async (id = "") => {
                   class="btn btn-primary btn-lg"
                   
           
-                  onclick="${
-                    id !== ""
-                      ? `saveItem(${id}, event)`
-                      : "saveItem(undefined, event)"
-                  };"
+                  onclick="${id !== "" ? `saveItem(${id})` : "saveItem()"};"
                 >
                   Spremi
                 </div>

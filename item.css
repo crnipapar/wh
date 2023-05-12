@@ -170,3 +170,17 @@ h1.id {
   color: #212529;
   background-color: transparent;
 }
+
+.parent-element {
+  position: relative;
+}
+
+.fixed-element-1 {
+  position: sticky;
+  top: 0;
+}
+
+.fixed-element-2 {
+  position: sticky;
+  top: 40px;
+}
